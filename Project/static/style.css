@@ -1,1 +1,215 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  background: #ece5e5;
+  color: #1a1a1a;
+}
+
+/*----------------- Nav Bar -------------------------*/
+nav {
+    display: flex;
+    justify-content: space-around ;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgb(212, 147, 50);
+    height: 60px;
+}
+.logo img{
+   width: 100px;
+  
+}
+.nav-links a  {
+    margin-left: 40px;
+    text-decoration: none;
+    color: rgb(244, 235, 235);   
+}
+.nav-links a:hover{
+    border-bottom: 3px solid;
+    color: rgb(47, 46, 44); 
+}
+.nav-links-right a{
+    margin-left: 10px;
+    text-decoration: none;
+    color: rgb(244, 235, 235);
+}
+.profile-icon { 
+    cursor: pointer; 
+    font-size: 20px; 
+    color: white; 
+}
+.profile-card {
+    display: none;
+    position: absolute;
+    top: 50px; left: 20px;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    width: 500px;
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.profile-card a{
+    text-decoration: none;
+    color:white;
+    text-align: center;
+}
+.profile-card  button{
+    width: 80px;
+    height: 25px;
+    background-color: crimson;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    
+}
+
+/*------------------------- register page --------------------------*/
+.register-box {
+            background: white;
+            padding: 30px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            height: 350px;
+        }
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .register-box input[type="email"],
+        .register-box input[type="text"],
+        .register-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .register-box input[type="submit"] {
+            width: 100%;
+            padding: 20px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .register-box input[type="submit"]:hover {
+            background: #45a049;
+        }
+        .register-box p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .register-box a {
+            text-decoration: none;
+            text-align: center;
+            
+        }
+        .register-box  button{
+            width: 80px;
+            height: 25px;
+            background: crimson;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            
+        }
+/*------------------------- Login Page --------------------------*/
+.login-box {
+            background: white;
+            padding: 30px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            height: 350px;
+        }
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+        
+        }
+
+        .login-box input[type="submit"] {
+            width: 100%;
+            padding: 20px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-box input[type="submit"]:hover {
+            background: #45a049;
+        }
+        .login-box p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .login-box a {
+            text-decoration: none;
+        }
+        .login-box button{
+            width: 80px;
+            height: 25px;
+            background-color: crimson;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+/*--------------------login effects----------------*/
+.login-box{
+    opacity: 0;
+    transform:translateY(-30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.login-box.show{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/*----------------- Flash Message Effects--------------------------*/
+
+#flash-message {
+    padding: 3px;
+    margin: 15px auto;
+    border: 1px solid #cc0000;
+    border-radius:6px;
+    color:#fff;
+    background: #ff4d4d;
+    font-weight:bold;
+    transition: opacity 1s;
+    width: 280px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    height: 30px;
+    
+    
+}
+
+
 

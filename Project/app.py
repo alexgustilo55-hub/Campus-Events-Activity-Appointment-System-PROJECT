@@ -14,9 +14,12 @@ def get_db_connection():
         cursorclass=pymysql.cursors.DictCursor
     )
 #------------------- Main Page ------------------#
+
+
 @app.route('/')
 def main():
     return render_template("login.html")
+
 
 #------------------- User Register Process ------------------#
 
@@ -24,13 +27,21 @@ def main():
 def register():
    if request.method == 'POST':
        
+       role = request.form['role']
+       gender = request.form['gender']
+       id = request.form['id']
+       fullname = request.form['fullname']
+       phone = request.form['phone']
+       birthday = request.form['birthday']
        email = request.form['email']
+       address = request.form['address']
        username = request.form['username']
        password = request.form['password']
+
        
        conn = get_db_connection()
        cursor = conn.cursor()
-       cursor.execute("INSERT INTO users (email,username, password) VALUES (%s,%s, %s)", (email,username, password))
+       cursor.execute("INSERT INTO users (role,gender,id,full_name,phone,birthday, email, address, username, password) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (role,gender,id,fullname,phone,birthday, email, address, username, password))
        conn.commit()
        conn.close()
        
@@ -43,48 +54,90 @@ def register():
 
 #------------------------- Login Process --------------------------#
 
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
+        role = request.form['role']
         username = request.form['username']
         password = request.form['password']
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
+        cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s AND role=%s", (username, password,role))
         user = cursor.fetchone()
         conn.close()
 
         if user:
+            session['role'] = user['role']
             session['username'] = user['username']
             flash("Login successful!", "success")
-            return redirect(url_for('home'))               
+
+            if user['role'] == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            elif user['role'] == 'user':
+                return redirect(url_for('home'))
+            elif user['role'] == 'student':
+                return redirect(url_for('home'))
+            elif user['role'] == 'faculty':
+                return redirect(url_for('home'))
+            else:
+                return redirect(url_for('login'))          
         else:
-            flash("Invalid username or password", "danger")
+            flash("Invalid username or password", "error")
+
     return render_template("login.html")
 
-#------------------------- USER HOME ----------------------------#
+
+
+
+#--------------------------- Admin Dashboard ----------------------------#
+
+
+
+
+@app.route('/admin_dashboard')
+def admin_dashboard():
+    return render_template("admin_dashboard.html")
+
+
+
+
+
+#-------------------------------------- USER HOME ----------------------------#
+
+
+
+
 @app.route('/home')
 def home():
     if "username" in session:
         conn = get_db_connection()
         with conn.cursor() as cursor:
-            cursor.execute("SELECT username, email FROM users WHERE username=%s", (session["username"],))
+            cursor.execute("SELECT username, email,full_name,birthday FROM users WHERE username=%s", (session["username"],))
             user = cursor.fetchone()
         conn.close()
         return render_template("home.html", user = user)
     else:
         return redirect(url_for("login"))
     
+
+
+
     
-#----------------update-------------------#
+#----------------------------------- update --------------------------------#
+
+
 
 @app.route('/update_profile')
 def update_profile():
     return redirect(url_for("home"))
 
 
-#------------------ Dashboard ------------------#
+
+#---------------------------------- Dashboard -----------------------------#
+
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -93,7 +146,11 @@ def dashboard():
     else:
         return redirect(url_for('login'))
     
-#------------------  Logout ------------------#
+
+    
+#-----------------------------------  Logout -------------------------------#
+
+
 
 @app.route('/logout')
 def logout():

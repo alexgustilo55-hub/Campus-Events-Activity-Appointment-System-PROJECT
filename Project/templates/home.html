@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='flash.js')}}"></script>
+    
+</head>
 
+<body >
+    <header>
+    <nav>
+        <div class="profile-icon" onclick="toggleProfile()">👤</div>
+
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
+        </div>
+
+        <div class="nav-links">
+            <a href="{{url_for('home')}}">Home</a>
+            <a href=>Events</a>
+            <a href=>Calendar</a>
+            <a href=>Book Appointment</a>
+            <a href=>About</a>
+        </div>
+
+        <div class="nav-links-right">
+        </div>
+
+    </nav>
+    </header>
+    
+<!--------- Profile info ------->
+
+    <div class="profile-card" id="profileCard">
+        <h3>My Profile</h3>
+        <p><b>Email:</b> {{ user.email }}</p>
+        <p><b>Username:</b> {{ user.username }}</p>
+        
+        <br>
+        <a href="{{ url_for('update_profile') }}"><button>Update</a></button>
+        <br><br>
+        <a href="{{ url_for('login') }}"><button>Delete</a></button>
+        <br>
+        <br>
+       <center>
+        <a href="{{ url_for('logout') }}"><button>Logout</a></button>
+        </center>
+    </div>
+        
+    
+    <br>
+    <center>
+    <h1>Welcome to Campus and Appointment System!!</h1>
+    <p>Your gateway to seamless appointment scheduling.</p>
+    <br><br><br>
+    <h2>Under Maintenance!</h2>
+    </center>
+</body>
+</html>

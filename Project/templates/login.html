@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='flash.js')}}"></script>
+</head>
+<body>
+
+    <header>
+    <nav>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
+        </div>
+
+        <div class="nav-links">
+        <a href=>About</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href=>Admin</a>
+        </div>
+
+    </nav>
+    </header>
+    <center>
+        <br>
+        <h1>Campus Events & Activity Appointment System</h1><br><br>
+        
+    <div class="login-box">
+        <h2>Login</h2>
+    <form action ="{{url_for('login')}}" method="POST">
+        <input type="text" name="username"  placeholder = "Username" required>
+        <input type="password" name="password" placeholder = "Password" required>
+        <button type="submit">Login</button>
+    </form>
+        <p>dont have an account?<a href="{{url_for('register')}}">Register</a></p>
+    </div>
+
+
+    {% with message = get_flashed_messages() %}
+      {% if message %}
+        <div id="flash-message">
+          {{ message[0] }}
+        </div>
+      {% endif %}
+      {% endwith %}
+      </center>
+      
+      
+</body>
+</html>

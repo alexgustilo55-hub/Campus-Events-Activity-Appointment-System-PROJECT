@@ -28,21 +28,37 @@
     <div class="login-box">
         <h2>Login</h2>
     <form action ="{{url_for('login')}}" method="POST">
+
+        <div class ="select-role">
+            <select  type="role" name="role" required>
+                <option value="student">Student</option>
+                <option value="faculty">Faculty</option>
+                <option value="staff">Staff</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>  
+
+        <input type="id" name="id"  placeholder = "User ID" required>
         <input type="text" name="username"  placeholder = "Username" required>
         <input type="password" name="password" placeholder = "Password" required>
         <button type="submit">Login</button>
+        
     </form>
         <p>dont have an account?<a href="{{url_for('register')}}">Register</a></p>
     </div>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
 
-    {% with message = get_flashed_messages() %}
-      {% if message %}
-        <div id="flash-message">
-          {{ message[0] }}
-        </div>
-      {% endif %}
-      {% endwith %}
+    <div id="flash-message">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+    
+
       </center>
       
       

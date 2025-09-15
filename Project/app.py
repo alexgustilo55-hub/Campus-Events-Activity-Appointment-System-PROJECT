@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import pymysql
+import pymysql,os
 
 app = Flask(__name__)
 app.secret_key = "12345"
@@ -48,12 +48,9 @@ def register():
        flash("Registration successful!")
        return redirect(url_for('login'))
    
-   
    return render_template("register.html")
         
-
-#------------------------- Login Process --------------------------#
-
+#------------------------- User Login Process --------------------------#
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -81,14 +78,14 @@ def login():
                 return redirect(url_for('home'))
             elif user['role'] == 'faculty':
                 return redirect(url_for('home'))
+            elif user['role'] == 'staff':
+                return redirect(url_for('home'))
             else:
                 return redirect(url_for('login'))          
         else:
             flash("Invalid username or password", "error")
 
     return render_template("login.html")
-
-
 
 
 #--------------------------- Admin Dashboard ----------------------------#
@@ -104,7 +101,7 @@ def admin_dashboard():
 
 
 
-#-------------------------------------- USER HOME ----------------------------#
+#-------------------------------------- USER HOME PAGE ----------------------------#
 
 
 
@@ -114,16 +111,13 @@ def home():
     if "username" in session:
         conn = get_db_connection()
         with conn.cursor() as cursor:
-            cursor.execute("SELECT username, email,full_name,birthday FROM users WHERE username=%s", (session["username"],))
+            cursor.execute("SELECT username, email,full_name,birthday,role,address,id,phone  FROM users WHERE username=%s", (session["username"],))
             user = cursor.fetchone()
         conn.close()
         return render_template("home.html", user = user)
     else:
         return redirect(url_for("login"))
     
-
-
-
     
 #----------------------------------- update --------------------------------#
 
@@ -149,8 +143,6 @@ def dashboard():
 
     
 #-----------------------------------  Logout -------------------------------#
-
-
 
 @app.route('/logout')
 def logout():

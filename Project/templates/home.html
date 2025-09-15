@@ -30,20 +30,26 @@
     </nav>
     </header>
     
+    
 <!--------------------- Profile info ----------------------->
 
     <div class="profile-card" id="profileCard">
         <h3>My Profile</h3>
+        <br>
+        <p><b>Phone Number:</b> {{ user.phone }}</p>
+        <p><b>Role:</b> {{ user.role }}</p>
+        <p><b>ID Number:</b> {{ user.id}}</p>
         <p><b>name:</b> {{ user.full_name }}</p>
         <p><b>Email:</b> {{ user.email }}</p>
         <p><b>Username:</b> {{ user.username }}</p>
+        <p><b>Birthday</b> {{ user.birthday }}</p>
+        <p><b>Address:</b> {{ user.address}}</p>
         
-        <br>
+        
         <a href="{{ url_for('update_profile') }}"><button>Update</a></button>
-        <br><br>
+        
         <a href="{{ url_for('login') }}"><button>Delete</a></button>
-        <br>
-        <br>
+        
        <center>
         <a href="{{ url_for('logout') }}"><button>Logout</a></button>
         </center>
@@ -51,11 +57,27 @@
         
 <!---------------------------------- Main ---------------------------------------------------->
     <br>
+    <br>
     <center>
     <h1>Welcome to Campus and Appointment System!!</h1>
     <p>Your gateway to seamless appointment scheduling.</p>
     <br><br><br>
     <h2>Under Maintenance!</h2>
     </center>
+
+
+    <br><br>
+
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+    <div id="flash-message">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 </body>
 </html>

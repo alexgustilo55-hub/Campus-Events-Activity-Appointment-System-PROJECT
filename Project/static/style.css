@@ -67,6 +67,21 @@ nav {
     color: #ecf0f1;       
     transition: color 0.3s;
 }
+.navbar-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #333; 
+}
+.navbar-profile-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* kulay background */
+    color: #555;               /* kulay ng icon */
+    font-size: 20px;           /* laki ng icon */
+}
 
 .profile-icon:hover {
     color: #f39c12;      
@@ -85,53 +100,47 @@ nav {
 }
 
 .profile-card {
-    display: none;
-    position: absolute;
-    top: 100px;            
-    left: 15px;            
-    background-color: #eaebec; 
+   display: none;
+    position: fixed; /* Changed from absolute */
+    top: 70px;            
+    right: 15px;            
+    background-color: white; 
     border-radius: 15px;     
     padding: 15px;
     width: 300px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     z-index: 1001;
-    /* Animation settings */
     animation: slideFadeIn 0.3s ease forwards;
+}
+.profile-card-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.profile-card-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    color: #555;
+    font-size: 36px; /* icon size */
 }
 
 .profile-card a, .profile-card button {
     display: block;
     margin: 10px 0;
     text-decoration: none;
-    color: #ecf0f1;      
+    color: black;      
     text-align: left;
     transition: color 0.3s, background 0.3s;
 }
-
 .profile-card a:hover {
     color: #f39c12;     
 }
 
-.profile-card button {
-    background-color: #f39c12;
-    border: none;
-    border-radius: 5px;
-    padding: 1px 12px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
-    height: 40px;
-    width: 80px;
-}
-
-.profile-card button:hover {
-    background-color: #d68910;
-}
-
-/* Optional: show profile card with JS toggle */
-.profile-card.show {
-    display: block;
-}
 
 
 /*------------------------------------------- register page ----------------------------------------*/
@@ -177,7 +186,7 @@ nav {
     outline: none;
 }
 
-/* -------------- Row layout -------------------*/
+/* ----------------------- Row layout --------------------------*/
 .form-row {
     display: flex;
     gap: 12px;
@@ -196,7 +205,7 @@ nav {
     box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
     transform: scale(1.05);
 }
-/* -------------------Button---------------- */
+/* ------------------------Button-------------------- */
 .register-box button {
     width: 100%;
     padding: 12px;
@@ -213,7 +222,7 @@ nav {
     transform: scale(1.02);
     background: linear-gradient(135deg, #c42f60, #9c244c);
 }
-/* ---------Login link----------- */
+/* ---------------------Login link-------------------- */
 
 .register-box p {
     margin-top: 18px;
@@ -228,7 +237,7 @@ nav {
 .register-box a:hover {
     text-decoration: underline;
 }
-/* Animation */
+/* -Animation- */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -236,7 +245,7 @@ nav {
 
 
 
-/*---------------------------------------- Login Page -------------------------------------*/
+/*------------------------------------------ Login Page -------------------------------------*/
 
 
 
@@ -249,20 +258,16 @@ nav {
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
 }
-
 /* ---- Title ----- */
-
 .login-box h2 {
+
     margin-bottom: 25px;
     font-size: 26px;
     color: #333;
     font-weight: 600;
 }
-
-
-/*-------------------------- select role design --------------------------*/
-
 .select-role select {
+
     flex: 1;
     padding: 10px;
     border: 2px solid #ccc;
@@ -271,19 +276,20 @@ nav {
     font-size: 16px;
     transition: all 0.3s ease; 
 }
-/* ----- Hover and Focus Effects --- */
 .select-role select:hover {
+
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     transform: scale(1.02);
 }
 .select-role select:focus {
+
     border-color: #28a745;
     box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
     transform: scale(1.05);
 }
-/* ---------------- Inputs ------------------ */
 .login-box input {
+
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -293,15 +299,12 @@ nav {
     transition: 0.3s;
     background: #fafafa;
 }
-
 .login-box input:focus {
     border-color: #d6336c;
     background: #fff;
     box-shadow: 0px 0px 5px rgba(214,51,108,0.3);
     outline: none;
 }
-
-/* Button */
 .login-box button {
     width: 100%;
     padding: 12px;
@@ -314,28 +317,131 @@ nav {
     margin-top: 15px;
     transition: transform 0.2s, background 0.3s;
 }
-
 .login-box button:hover {
     transform: scale(1.02);
     background: linear-gradient(135deg, #c42f60, #9c244c);
 }
-
-/* Register Link */
 .login-box p {
     margin-top: 18px;
     font-size: 14px;
     color: #555;
 }
-
 .login-box a {
     color: #d6336c;
     text-decoration: none;
     font-weight: bold;
 }
-
 .login-box a:hover {
     text-decoration: underline;
 }
+
+
+/*------------------------------------------- change password  ---------------------------------------*/
+
+.changepass-box{
+    background: #fff;
+    padding: 25px 40px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+.changepass-box h2 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
+}
+.changepass-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: 0.3s;
+    background: #fafafa;
+}
+.changepass-box button {
+    width: 90%;
+    padding: 12px;
+    background: linear-gradient(135deg, #d6336c, #b02a54);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: transform 0.2s, background 0.3s;
+}
+
+/*------------------------------------------- User Information --------------------------------------*/
+
+/*----------- Upload Profile ----------*/
+#profileForm {
+    display: flex;
+    justify-content: center;
+    
+}
+.profile-img-label {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* circle */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+    cursor: pointer;
+    margin: 0 auto 20px auto; /* center */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile-img-label.placeholder {
+    background-color: #f0f0f0;
+    color: #555;
+    font-size: 36px; /* icon size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-img-label:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+/*--------------------------------------------*/
+
+.user_information {
+    background-color: #fff;
+    padding: 40px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    max-width: 500%;
+    text-align: left;
+    margin-top: 60px;
+}
+.user_information h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: #333;
+}
+.user_information p {
+    margin: 12px 0;
+    padding: 5px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #333;
+}
+
 
 
 
@@ -368,6 +474,7 @@ nav {
   0%, 80% { opacity: 1; }
   100% { opacity: 0; display: none; }
 }
+
 
 
 

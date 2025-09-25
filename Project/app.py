@@ -89,12 +89,90 @@ def login():
     return render_template("login.html")
 
 
-#------------------------------------- Admin Dashboard -----------------------------------#
+#------------------------------------- Admin Home Page -----------------------------------#
 
 
 @app.route('/admin_dashboard')
 def admin_dashboard():
-    return render_template("admin_dashboard.html")
+    if "username" in session:
+        if "username" in session:
+            conn = get_db_connection()
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+                user = cursor.fetchone()  
+        conn.close()
+        return render_template("admin_home.html", user=user)  
+    else:
+        return redirect(url_for("login"))
+    
+#------------------------------------- Admin Information -----------------------------------#
+
+@app.route('/admin_info')
+def admin_info():
+    if "username" in session:
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+            user = cursor.fetchone()
+        conn.close()
+        return render_template("admin_information.html", user=user)
+    else:
+        return redirect(url_for("login"))
+    
+#-------------------------------------- Admin Update Password ------------------------------#
+
+@app.route('/admin_update_password', methods=['GET', 'POST'])
+def admin_update_password():
+    if "username" not in session:
+        return redirect(url_for('login'))
+    
+    conn = get_db_connection()
+    if request.method == "POST":
+        email = request.form.get("email")
+        current_password = request.form.get("current_password") 
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        with conn.cursor() as cursor:
+            
+            cursor.execute("SELECT email, password FROM users WHERE username=%s", (session["username"],))
+            result = cursor.fetchone()
+
+            if result is None:
+                flash("User not found.", "danger")
+                conn.close()
+                return redirect(url_for("admin_update_password"))
+
+            db_email = result["email"]        
+            db_password = result["password"]  
+
+            if email != db_email:
+                flash("Email does not match.", "danger")
+                conn.close()
+                return redirect(url_for("admin_update_password"))
+
+            if current_password != db_password:
+                flash("Incorrect current password.", "danger")
+                conn.close()
+                return redirect(url_for("admin_update_password"))
+
+            if new_password != confirm_password:
+                flash("New passwords do not match.", "danger")
+                conn.close()
+                return redirect(url_for("admin_update_password"))
+
+            cursor.execute("UPDATE users SET password=%s WHERE username=%s", (new_password, session["username"]))
+            conn.commit()
+
+        conn.close()
+        flash("Password updated successfully!", "success")
+        return redirect(url_for("admin_dashboard"))
+    
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+        user = cursor.fetchone()
+    conn.close()
+    return render_template("admin_changepass.html", user=user)
 
 #-------------------------------------- User home page ------------------------------#
 
@@ -108,9 +186,11 @@ def home():
                 cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
                 user = cursor.fetchone()  
         conn.close()
-        return render_template("home.html", user=user)  
+        return render_template("user_home.html", user=user)  
     else:
         return redirect(url_for("login"))
+    
+
     
 #--------------------------------------- User Information --------------------------------------------#
 
@@ -128,7 +208,7 @@ def user_info():
     
     
 
-#--------------------------------------- update password --------------------------------------------#
+#--------------------------------------- User update password --------------------------------------------#
 
 @app.route('/update_password', methods=['GET', 'POST'])
 def update_password():

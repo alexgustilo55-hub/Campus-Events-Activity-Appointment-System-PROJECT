@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>Login Page</title>
+    <link rel="icon" type="image/png" href="static/img/logo.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{url_for('static', filename='flash.js')}}"></script>
 </head>
@@ -16,7 +17,8 @@
         <div class="nav-links">
         <a href=>About</a>
         <a href="{{ url_for('login') }}">Login</a>
-        <a href=>Admin</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{url_for('login')}}">Admin</a>
         </div>
 
     </nav>
@@ -44,7 +46,7 @@
         <button type="submit">Login</button>
         
     </form>
-        <p>dont have an account?<a href="{{url_for('register')}}">Register</a></p>
+        <p>You dont have an account? <a href="{{url_for('register')}}">Register</a></p>
     </div>
 
 {% with messages = get_flashed_messages(with_categories=true) %}

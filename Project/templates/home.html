@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Home Page</title>
+    <link rel="icon" type="image/png" href="static/img/logo.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="{{url_for('static', filename='flash.js')}}"></script>
     
 </head>
@@ -10,7 +12,7 @@
 <body >
     <header>
     <nav>
-        <div class="profile-icon" onclick="toggleProfile()">👤</div>
+        
 
         <div class="logo">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
@@ -27,6 +29,20 @@
         <div class="nav-links-right">
         </div>
 
+
+        <div class="profile-icon" onclick="toggleProfile()">
+    {% if user.profile_pic %}
+        <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
+             alt="Profile Picture" 
+             class="navbar-profile-img">
+    {% else %}
+        <div class="navbar-profile-img placeholder">
+            <i class="bi bi-person"></i>
+        </div>
+    {% endif %}
+</div>
+
+
     </nav>
     </header>
     
@@ -34,24 +50,33 @@
 <!--------------------- Profile info ----------------------->
 
     <div class="profile-card" id="profileCard">
-        <h3>My Profile</h3>
+
+        <center>
+
+          {% if user.profile_pic %}
+    <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
+         alt="Profile Picture" 
+         class="profile-card-img">
+{% else %}
+    <div class="profile-card-img placeholder">
+        <i class="bi bi-person"></i> <!-- Font Awesome user icon -->
+    </div>
+{% endif %}
+          
+
+        <p><b>Welcome</b> {{ user.full_name }}</p></center>
         <br>
-        <p><b>Phone Number:</b> {{ user.phone }}</p>
-        <p><b>Role:</b> {{ user.role }}</p>
-        <p><b>ID Number:</b> {{ user.id}}</p>
-        <p><b>name:</b> {{ user.full_name }}</p>
-        <p><b>Email:</b> {{ user.email }}</p>
-        <p><b>Username:</b> {{ user.username }}</p>
-        <p><b>Birthday</b> {{ user.birthday }}</p>
-        <p><b>Address:</b> {{ user.address}}</p>
-        
-        
-        <a href="{{ url_for('update_profile') }}"><button>Update</a></button>
-        
-        <a href="{{ url_for('login') }}"><button>Delete</a></button>
+
+        <a href="{{url_for('user_info')}}"> 
+          <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>User Profile</a>
+        <a href="{{url_for('update_password')}}"> 
+          <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password</a>
+        <a href=""></a>
         
        <center>
-        <a href="{{ url_for('logout') }}"><button>Logout</a></button>
+        <br><br>
+        <a href="{{ url_for('logout') }}"> 
+          <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>Logout</a>
         </center>
     </div>
         

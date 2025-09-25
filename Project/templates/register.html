@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Sign up</title>
+    <link rel="icon" type="image/png" href="static/img/logo.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -20,6 +21,8 @@
 
     </nav>
     </header>
+
+
     <center>
         <br>
         <h1>Campus Events & Activity Appointment System</h1><br>
@@ -32,7 +35,6 @@
 
         <div class="form-row">
         <select  type="role" name="role" required>
-            <option value="user">User</option>
             <option value="student">Student</option>
             <option value="faculty">Faculty</option>
             <option value="staff">Staff</option>
@@ -62,7 +64,9 @@
         
         <button type="submit">Sign up</button>
     </form>
-        <p>have an account?<a href=>login</a></p>
+
+        <p>You have an account? <a href="{{url_for('login')}}">login</a></p>
+
     </div>
 
       </center>

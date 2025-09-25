@@ -19,7 +19,7 @@
         </div>
 
         <div class="nav-links">
-            <a href="{{url_for('home')}}">Home</a>
+            <a href="{{url_for('admin_dashboard')}}">Home</a>
             <a href=>Events</a>
             <a href=>Calendar</a>
             <a href=>Book Appointment</a>
@@ -63,11 +63,18 @@
 
         <br>
 
-        <a href="{{url_for('user_info')}}">
-            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>User Profile</a>
-        <a href="{{url_for('update_password')}}">
+        <a href="{{url_for('admin_info')}}">
+            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Admin Profile</a>
+        <a href="{{url_for('admin_update_password')}}">
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password</a>
-        <a href="#"></a>
+        <a href="#">
+            <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>Dashboard</a>
+        <a href="#">
+            <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>Create Events</a>
+        <a href="#">
+            <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>Manage Appointments</a>
+        <a href="#">
+            <i class="bi bi-building-fill-add" style="color:black; font-size:18px; margin-right:6px;"></i>Book Venue</a>
         
         <br><br>
 
@@ -86,7 +93,7 @@
 
         <h2>Change your Password</h2>
 
-    <form action ="{{url_for('update_password')}}" method="POST">
+    <form action ="{{url_for('admin_update_password')}}" method="POST">
 
         <input type="Email" name="email" placeholder="email" required>
         <input type="text" name="current_password"  placeholder = "Current Password" required>

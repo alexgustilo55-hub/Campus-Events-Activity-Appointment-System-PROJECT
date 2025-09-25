@@ -3,7 +3,7 @@
 <head>
     <title>Sign up</title>
     <link rel="icon" type="image/png" href="static/img/logo.png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
         <div class="nav-links">
             <a href=>About</a>
             <a href="{{ url_for('login') }}">Login</a>
-            <a href=>Admin</a>
+            <a href="{{url_for('login')}}">Admin</a>
         </div>
 
     </nav>

@@ -3,6 +3,7 @@ import pymysql,os
 
 app = Flask(__name__)
 app.secret_key = "12345"
+app.config['UPLOAD_FOLDER'] = "static/img_profile/"
 
 
 def get_db_connection():
@@ -21,7 +22,7 @@ def main():
     return render_template("login.html")
 
 
-#------------------- User Register Process ------------------#
+#--------------------------- User Register Process -----------------------#
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -50,7 +51,7 @@ def register():
    
    return render_template("register.html")
         
-#------------------------- User Login Process --------------------------#
+#------------------------------- User Login Process -------------------------------------#
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -88,61 +89,133 @@ def login():
     return render_template("login.html")
 
 
-#--------------------------- Admin Dashboard ----------------------------#
-
-
+#------------------------------------- Admin Dashboard -----------------------------------#
 
 
 @app.route('/admin_dashboard')
 def admin_dashboard():
     return render_template("admin_dashboard.html")
 
-
-
-
-
-#-------------------------------------- USER HOME PAGE ----------------------------#
-
-
-
+#-------------------------------------- User home page ------------------------------#
 
 @app.route('/home')
 def home():
+
+    if "username" in session:
+        if "username" in session:
+            conn = get_db_connection()
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+                user = cursor.fetchone()  
+        conn.close()
+        return render_template("home.html", user=user)  
+    else:
+        return redirect(url_for("login"))
+    
+#--------------------------------------- User Information --------------------------------------------#
+
+@app.route('/user_info')
+def user_info():
     if "username" in session:
         conn = get_db_connection()
         with conn.cursor() as cursor:
-            cursor.execute("SELECT username, email,full_name,birthday,role,address,id,phone  FROM users WHERE username=%s", (session["username"],))
+            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
             user = cursor.fetchone()
         conn.close()
-        return render_template("home.html", user = user)
+        return render_template("user_information.html", user=user)
     else:
         return redirect(url_for("login"))
     
     
-#----------------------------------- update --------------------------------#
 
+#--------------------------------------- update password --------------------------------------------#
 
-
-@app.route('/update_profile')
-def update_profile():
-    return redirect(url_for("home"))
-
-
-
-#---------------------------------- Dashboard -----------------------------#
-
-
-
-@app.route('/dashboard')
-def dashboard():
-    if 'username' in session:
-        return render_template("student_dashboard.html", username=session['username'])
-    else:
+@app.route('/update_password', methods=['GET', 'POST'])
+def update_password():
+    if "username" not in session:
         return redirect(url_for('login'))
     
+    conn = get_db_connection()
+    if request.method == "POST":
+        email = request.form.get("email")
+        current_password = request.form.get("current_password") 
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        with conn.cursor() as cursor:
+            
+            cursor.execute("SELECT email, password FROM users WHERE username=%s", (session["username"],))
+            result = cursor.fetchone()
+
+            if result is None:
+                flash("User not found.", "danger")
+                conn.close()
+                return redirect(url_for("update_password"))
+
+            db_email = result["email"]        
+            db_password = result["password"]  
+
+            if email != db_email:
+                flash("Email does not match.", "danger")
+                conn.close()
+                return redirect(url_for("update_password"))
+
+            if current_password != db_password:
+                flash("Incorrect current password.", "danger")
+                conn.close()
+                return redirect(url_for("update_password"))
+
+            if new_password != confirm_password:
+                flash("New passwords do not match.", "danger")
+                conn.close()
+                return redirect(url_for("update_password"))
+
+            cursor.execute("UPDATE users SET password=%s WHERE username=%s", (new_password, session["username"]))
+            conn.commit()
+
+        conn.close()
+        flash("Password updated successfully!", "success")
+        return redirect(url_for("home"))
+    
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+        user = cursor.fetchone()
+    conn.close()
+    return render_template("user_changepass.html", user=user)
+
+
+#--------------------------------------- Upload Profile Piture --------------------------------------------#
+
+
+@app.route('/upload_profile', methods=['POST'])
+def upload_profile():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    
+    file = request.files.get('profile_pic')
+    
+    if file:
+        filename = file.filename 
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)  
+        
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "UPDATE users SET profile_pic=%s WHERE username=%s",
+                (filename, session["username"])
+            )
+            conn.commit()
+        conn.close()
+        flash("Profile picture updated successfully!")
+    else:
+        flash("No file selected.")
+
+    return redirect(url_for("user_info"))
+
 
     
-#-----------------------------------  Logout -------------------------------#
+#----------------------------------------- Logout -----------------------------------------#
 
 @app.route('/logout')
 def logout():

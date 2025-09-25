@@ -1,0 +1,492 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  background: #ece5e5;
+  color: #1a1a1a;
+  margin: 0;
+  padding-top: 60px;  /* adjust depende sa height ng header */
+    
+}
+
+
+
+/*------------------------------- Header & Navbar -------------------------------*/
+
+header {
+    position: fixed;        
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white; 
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    border-bottom: 100px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;
+    padding: 10px 40px;
+    height: 60px;
+    position: relative;              
+}
+
+/* Logo */
+.logo img {
+    width: 120px;
+    height: 50px;
+}
+
+/*--- Nav links ---*/
+.nav-links a, .nav-links-right a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: black;      
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links-right a:hover {
+    color: #f39c12;      
+    border-bottom: 2px solid #f39c12;
+}
+
+/*---------------------- profile icon ------------------------*/
+
+.profile-icon {
+    cursor: pointer;
+    font-size: 22px;
+    color: #ecf0f1;       
+    transition: color 0.3s;
+}
+.navbar-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #333; 
+}
+.navbar-profile-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* kulay background */
+    color: #555;               /* kulay ng icon */
+    font-size: 20px;           /* laki ng icon */
+}
+
+.profile-icon:hover {
+    color: #f39c12;      
+}
+
+/* Animation Keyframes */
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-card {
+   display: none;
+    position: fixed; /* Changed from absolute */
+    top: 70px;            
+    right: 15px;            
+    background-color: white; 
+    border-radius: 15px;     
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1001;
+    animation: slideFadeIn 0.3s ease forwards;
+}
+.profile-card-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.profile-card-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    color: #555;
+    font-size: 36px; /* icon size */
+}
+
+.profile-card a, .profile-card button {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: black;      
+    text-align: left;
+    transition: color 0.3s, background 0.3s;
+}
+.profile-card a:hover {
+    color: #f39c12;     
+}
+
+/*------------------------------------------- register page ----------------------------------------*/
+
+
+.register-box {
+    background: #fff;
+    padding: 30px 30px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+    width: 420px;
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+    
+}
+
+/* Title */
+.register-box h2 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Inputs & Selects */
+.register-box input,
+.register-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: 0.3s;
+    background: #fafafa;
+}
+
+.register-box input:focus,
+.register-box select:focus {
+    border-color: #d6336c;
+    background: #fff;
+    box-shadow: 0px 0px 5px rgba(214,51,108,0.3);
+    outline: none;
+}
+
+/* ----------------------- Row layout --------------------------*/
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+.form-row input,
+.form-row select {
+    flex: 1;
+}
+.form-row select:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    transform: scale(1.02);
+}
+.form-row select:focus {
+    
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+    transform: scale(1.05);
+}
+/* ------------------------Button-------------------- */
+.register-box button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #d6336c, #b02a54);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: transform 0.2s, background 0.3s;
+}
+.register-box button:hover {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #c42f60, #9c244c);
+}
+/* ---------------------Login link-------------------- */
+
+.register-box p {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #555;
+}
+.register-box a {
+    color: #d6336c;
+    text-decoration: none;
+    font-weight: bold;
+}
+.register-box a:hover {
+    text-decoration: underline;
+}
+/* -Animation- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/*------------------------------------------ Login Page -------------------------------------*/
+
+
+
+.login-box {
+    background: #fff;
+    padding: 25px 40px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+/* ---- Title ----- */
+.login-box h2 {
+
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
+}
+.select-role select {
+
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    font-size: 16px;
+    transition: all 0.3s ease; 
+}
+.select-role select:hover {
+
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    transform: scale(1.02);
+}
+.select-role select:focus {
+
+    border-color: #28a745;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+    transform: scale(1.05);
+}
+.login-box input {
+
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: 0.3s;
+    background: #fafafa;
+}
+.login-box input:focus {
+    border-color: #d6336c;
+    background: #fff;
+    box-shadow: 0px 0px 5px rgba(214,51,108,0.3);
+    outline: none;
+}
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #d6336c, #b02a54);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: transform 0.2s, background 0.3s;
+}
+.login-box button:hover {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #c42f60, #9c244c);
+}
+.login-box p {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #555;
+}
+.login-box a {
+    color: #d6336c;
+    text-decoration: none;
+    font-weight: bold;
+}
+.login-box a:hover {
+    text-decoration: underline;
+}
+
+
+/*------------------------------------------- change password  ---------------------------------------*/
+
+.changepass-box{
+    background: #fff;
+    padding: 25px 40px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+.changepass-box h2 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
+}
+.changepass-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: 0.3s;
+    background: #fafafa;
+}
+.changepass-box button {
+    width: 90%;
+    padding: 12px;
+    background: linear-gradient(135deg, #d6336c, #b02a54);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: transform 0.2s, background 0.3s;
+}
+
+/*------------------------------------------- User Information --------------------------------------*/
+
+/*----------- Upload Profile ----------*/
+#profileForm {
+    display: flex;
+    justify-content: center;
+    
+}
+.profile-img-label {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* circle */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+    cursor: pointer;
+    margin: 0 auto 20px auto; /* center */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile-img-label.placeholder {
+    background-color: #f0f0f0;
+    color: #555;
+    font-size: 36px; /* icon size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-img-label:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+/*--------------------------------------------*/
+
+.user_information {
+    background-color: #fff;
+    padding: 40px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    max-width: 500%;
+    text-align: left;
+    margin-top: 60px;
+}
+.user_information h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: #333;
+}
+.user_information p {
+    margin: 12px 0;
+    padding: 5px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #333;
+}
+
+
+
+
+/*------------------------------------------- Flash Message Effects---------------------------------------*/
+
+.flash {
+  padding: 8px 12px;     
+  margin: 8px auto;
+  width: fit-content;     
+  max-width: 300px;        
+  border-radius: 6px;
+  font-size: 14px;         
+  font-weight: 500;
+  text-align: center;
+  animation: fadeOut 4s forwards; 
+}
+
+
+.flash.success {
+  color: rgb(216, 214, 214);
+  background-color: green;
+  
+}
+.flash.error {
+  color:rgb(216, 214, 214);
+  background-color: red;
+}
+/* Animation */
+@keyframes fadeOut {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+
+
+
+
+.side-bar {
+    position: fixed;       /* nakapirmi sa gilid habang nag-scroll */
+    top: 62px;             /* adjust depende sa taas ng header/navbar */
+    left: 1px;               /* gilid ng screen */
+    width: 200px;          /* lapad ng sidebar */
+    height: calc(100% - 80px); /* full height minus header */
+    padding: 10px;
+    background-color: #fff; 
+    border-radius: 0 8px 8px 0; /* rounded sa right side lang */
+    box-shadow: 2px 0 6px rgba(0,0,0,0.1); /* subtle shadow sa kanan */
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; /* para laging nasa ibabaw */
+}
+

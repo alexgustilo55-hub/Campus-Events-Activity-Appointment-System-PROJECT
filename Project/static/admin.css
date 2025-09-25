@@ -1,0 +1,154 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  background: #ece5e5;
+  color: #1a1a1a;
+  margin: 0;
+  padding-top: 60px;  /* adjust depende sa height ng header */
+    
+}
+/*------------------------------- Header & Navbar -------------------------------*/
+
+header {
+    position: fixed;        
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white; 
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    border-bottom: 100px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;
+    padding: 10px 40px;
+    height: 60px;
+    position: relative;              
+}
+
+/* Logo */
+.logo img {
+    width: 120px;
+    height: 50px;
+}
+
+/*--- Nav links ---*/
+.nav-links a, .nav-links-right a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: black;      
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links-right a:hover {
+    color: #f39c12;      
+    border-bottom: 2px solid #f39c12;
+}
+
+/*---------------------- profile icon ------------------------*/
+
+.profile-icon {
+    cursor: pointer;
+    font-size: 22px;
+    color: #ecf0f1;       
+    transition: color 0.3s;
+}
+.navbar-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #333; 
+}
+.navbar-profile-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; 
+    color: #555;               
+    font-size: 20px;          
+}
+
+.profile-icon:hover {
+    color: #f39c12;      
+}
+
+/* Animation Keyframes */
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-card {
+   display: none;
+    position: fixed; /* Changed from absolute */
+    top: 70px;            
+    right: 15px;            
+    background-color: white; 
+    border-radius: 15px;     
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1001;
+    animation: slideFadeIn 0.3s ease forwards;
+}
+.profile-card-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.profile-card-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    color: #555;
+    font-size: 36px; /* icon size */
+}
+
+.profile-card a, .profile-card button {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: black;      
+    text-align: left;
+    transition: color 0.3s, background 0.3s;
+}
+.profile-card a:hover {
+    color: #f39c12;     
+}
+
+/*-------------------------- Side bar border -------------------------*/
+
+.side-bar {
+    position: fixed;     
+    top: 62px;            
+    left: 1px;               
+    width: 200px;         
+    height: calc(100% - 80px); 
+    padding: 10px;
+    background-color: #fff; 
+    border-radius: 0 8px 8px 0; 
+    box-shadow: 2px 0 6px rgba(0,0,0,0.1); 
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; 
+}

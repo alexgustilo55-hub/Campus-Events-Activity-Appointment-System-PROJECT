@@ -54,7 +54,7 @@ nav {
     border-bottom: 2px solid #f39c12;
 }
 
-/*---------------------- profile icon ------------------------*/
+/*-------------------------------------- profile icon ----------------------------------*/
 
 .profile-icon {
     cursor: pointer;
@@ -77,11 +77,9 @@ nav {
     color: #555;               
     font-size: 20px;          
 }
-
 .profile-icon:hover {
     color: #f39c12;      
 }
-
 /* Animation Keyframes */
 @keyframes slideFadeIn {
     0% {
@@ -124,7 +122,7 @@ nav {
     font-size: 36px; /* icon size */
 }
 
-.profile-card a, .profile-card button {
+.profile-card a {
     display: block;
     margin: 10px 0;
     text-decoration: none;
@@ -136,14 +134,14 @@ nav {
     color: #f39c12;     
 }
 
-/*-------------------------- Side bar border -------------------------*/
+/*------------------------------------ Side bar border ------------------------------------*/
 
 .side-bar {
     position: fixed;     
     top: 62px;            
     left: 1px;               
-    width: 200px;         
-    height: calc(100% - 80px); 
+    width: 230px;         
+    height: calc(100% - 66px); 
     padding: 10px;
     background-color: #fff; 
     border-radius: 0 8px 8px 0; 
@@ -151,4 +149,46 @@ nav {
     display: flex;
     flex-direction: column;
     z-index: 1000; 
+}
+.side-bar a {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: black;      
+    text-align: left;
+    transition: color 0.3s, background 0.3s;
+}
+.side-bar a:hover{
+    color: #f39c12;
+}
+.log-out{
+    margin-top: auto;
+    
+}
+/*------------------------------------------------- Flash Message Effects------------------------------------------------*/
+
+.flash {
+  padding: 8px 12px;     
+  margin: 8px auto;
+  width: fit-content;     
+  max-width: 300px;        
+  border-radius: 6px;
+  font-size: 14px;         
+  font-weight: 500;
+  text-align: center;
+  animation: fadeOut 4s forwards; 
+}
+.flash.success {
+  color: rgb(216, 214, 214);
+  background-color: green;
+  
+}
+.flash.error {
+  color:rgb(216, 214, 214);
+  background-color: red;
+}
+/* Animation */
+@keyframes fadeOut {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
 }

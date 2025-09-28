@@ -57,7 +57,7 @@ nav {
     border-bottom: 2px solid #f39c12;
 }
 
-/*---------------------- profile icon ------------------------*/
+/*------------------------------------ profile icon -----------------------------------*/
 
 .profile-icon {
     cursor: pointer;
@@ -144,21 +144,23 @@ nav {
 
 .register-box {
     background: #fff;
-    padding: 30px 30px;
+    padding: 5px 30px;
     border-radius: 16px;
     box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
     width: 420px;
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
-    
+    margin-top: 5px;
+    height: 600px;
 }
 
 /* Title */
 .register-box h2 {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     font-size: 26px;
     color: #333;
     font-weight: 600;
+    
 }
 
 /* Inputs & Selects */
@@ -253,6 +255,7 @@ nav {
     width: 350px;
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
+    height: 400px;
 }
 /* ---- Title ----- */
 .login-box h2 {
@@ -265,12 +268,14 @@ nav {
 .select-role select {
 
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: 2px solid #ccc;
     border-radius: 8px;
     background: white;
     font-size: 16px;
     transition: all 0.3s ease; 
+    margin-top: 20px;
+
 }
 .select-role select:hover {
 
@@ -288,7 +293,7 @@ nav {
 
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin: 13px 0;
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 15px;
@@ -339,8 +344,9 @@ nav {
     padding: 25px 40px;
     border-radius: 16px;
     box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
-    width: 350px;
+    width: 450px;
     text-align: center;
+    height: 500px;
 }
 .changepass-box h2 {
     margin-bottom: 25px;
@@ -351,7 +357,7 @@ nav {
 .changepass-box input {
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin: 15px 0;
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 15px;
@@ -367,7 +373,7 @@ nav {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 20px;
     transition: transform 0.2s, background 0.3s;
 }
 
@@ -420,7 +426,8 @@ nav {
     width: 40%;
     max-width: 500%;
     text-align: left;
-    margin-top: 60px;
+    margin-top: 10px;
+    height: 660px;
 }
 .user_information h2 {
     text-align: center;
@@ -475,18 +482,5 @@ nav {
 
 
 
-.side-bar {
-    position: fixed;       /* nakapirmi sa gilid habang nag-scroll */
-    top: 62px;             /* adjust depende sa taas ng header/navbar */
-    left: 1px;               /* gilid ng screen */
-    width: 200px;          /* lapad ng sidebar */
-    height: calc(100% - 80px); /* full height minus header */
-    padding: 10px;
-    background-color: #fff; 
-    border-radius: 0 8px 8px 0; /* rounded sa right side lang */
-    box-shadow: 2px 0 6px rgba(0,0,0,0.1); /* subtle shadow sa kanan */
-    display: flex;
-    flex-direction: column;
-    z-index: 1000; /* para laging nasa ibabaw */
-}
+
 

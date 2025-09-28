@@ -4,6 +4,7 @@
     <title>User Information</title>
     <link rel="icon" type="image/png" href="static/img/logo.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="{{url_for('static', filename='flash.js')}}"></script>
     
@@ -20,14 +21,18 @@
 
         <div class="nav-links">
             <a href="{{url_for('admin_dashboard')}}">Home</a>
+            <a href=>Dashboard</a>
             <a href=>Events</a>
-            <a href=>Calendar</a>
-            <a href=>Book Appointment</a>
+            <a href=>Appointments</a>
+            <a href=>Venue</a>
+            <a href=>Calendar View</a>
             <a href=>About</a>
         </div>
 
         <div class="nav-links-right">
         </div>
+
+<!-------------------------------------------- navbar icon -------------------------------------------------->
 
         <div class="profile-icon" onclick="toggleProfile()">
     {% if user.profile_pic %}
@@ -45,7 +50,7 @@
     </nav>
     </header>
 
-    <!--------------------- Profile info  ----------------------->
+    <!-------------------------------------------- Profile info  ----------------------------------------------->
 
     <div class="profile-card" id="profileCard">
 
@@ -57,7 +62,7 @@
          class="profile-card-img">
 {% else %}
     <div class="profile-card-img placeholder">
-        <i class="bi bi-person"></i> <!-- Font Awesome user icon -->
+        <i class="bi bi-person"></i> 
     </div>
 {% endif %}
 
@@ -67,24 +72,15 @@
             <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Admin Profile</a>
         <a href="{{url_for('admin_update_password')}}">
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password</a>
-        <a href="#">
-            <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>Dashboard</a>
-        <a href="#">
-            <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>Create Events</a>
-        <a href="#">
-            <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>Manage Appointments</a>
-        <a href="#">
-            <i class="bi bi-building-fill-add" style="color:black; font-size:18px; margin-right:6px;"></i>Book Venue</a>
         
-        
-       <center>
+       
         <br><br>
         <a href="{{ url_for('logout') }}">
             <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>Logout</a>
-        </center>
+        
     </div>
 
-    <!--------------------- User All Information ----------------------->
+    <!----------------------------------------- User All Information ---------------------------------------->
     <center>
 
     <div class = "user_information">
@@ -117,6 +113,28 @@
     </div>
     </center>
 
+
+<!------------------------------------------------- side bar ---------------------------------------------------->
+
+    <div class="side-bar">
+        <a href="#">
+          <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>Dashboard</a>
+        <a href="#">
+          <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>Create Events</a>
+        <a href="#">
+          <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>Manage Appointments</a>
+        <a href="#">
+          <i class="bi bi-building-fill-add" style="color:black; font-size:18px; margin-right:6px;"></i>Book Venue</a>
+        <a href="#">
+            <i class="bi bi-calendar" style="color:black; font-size:18px; margin-right:6px;"></i>Calendar View</a>
+
+        <div class="log-out">
+          <a href="{{ url_for('logout') }}"> 
+            <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>Logout</a>
+        </div>
+
+
+    </div>
       
 
 </body>

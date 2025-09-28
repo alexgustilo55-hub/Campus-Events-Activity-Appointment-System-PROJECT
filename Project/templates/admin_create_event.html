@@ -51,7 +51,7 @@
     </nav>
     </header>
 
-    <!-------------------------------------------- Profile info -------------------------------------------------->
+<!-------------------------------------------- Profile info -------------------------------------------------->
 
     <div class="profile-card" id="profileCard">
         <center>
@@ -81,7 +81,6 @@
         
     </div>
 
-
 <!------------------------------------------------- side bar ---------------------------------------------------->
 
     <div class="side-bar">
@@ -103,19 +102,38 @@
 
 
     </div>
-        
 
+<!------------------------------------------------- form for creating events ---------------------------------------------------->
 
-
-        
-<!---------------------------------- Main ---------------------------------------------------->
-    <br>
-    <br>
     <center>
-    <h1>Welcome Admin!!!!</h1>
-    <p>Manage Your Event for your System!</p>
-    <br><br><br>
+    <form action="/create_event" method="POST">
+    <h4>Create Events</h4>
+    <label>Event Details</lable>
+    <input type ="text" name="event_name" required> <br>
+    <br>
+
+    <label>Locations</lable>
+    <input type ="text" name="location" required> <br>
+    <br>
+
+    <label>Event Date</lable>
+    <input type ="date" name="event_date" required> <br>
+    <br>
+
+    <label>Event Time</lable>
+    <input type ="time" name="event_time" required> <br>
+    <br>
+
+
+    <label>Descriptions</lable>
+    <textarea name="descriptions"></textarea>
+        <br><br>
+    
+    <button type = "submit">Create Events</button>
+    </form>
     </center>
+
+    
 
 
     <br><br>
@@ -134,9 +152,3 @@
   </center>
 </body>
 </html>
-
-
-        
-
-    
-

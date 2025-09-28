@@ -47,7 +47,7 @@
     </header>
     
     
-<!--------------------- Profile info ----------------------->
+<!----------------------------------------------------- Profile info ------------------------------------------------>
 
     <div class="profile-card" id="profileCard">
 
@@ -59,7 +59,7 @@
          class="profile-card-img">
 {% else %}
     <div class="profile-card-img placeholder">
-        <i class="bi bi-person"></i> <!-- Font Awesome user icon -->
+        <i class="bi bi-person"></i> 
     </div>
 {% endif %}
           
@@ -80,17 +80,30 @@
         </center>
     </div>
         
-<!---------------------------------- Main ---------------------------------------------------->
+<!--------------------------------------------------- Main ---------------------------------------------------->
     <br>
     <br>
     <center>
     <h1>Welcome to Campus and Appointment System!!</h1>
     <p>Your gateway to seamless appointment scheduling.</p>
     <br><br><br>
-    <h2>Under Maintenance!</h2>
+
+    <h2>Upcoming Events!</h2>
+    <ul>
+      {% for event in events %}
+      <li>
+        <b>{{ event.event_name}}</b> ({{ event.location}}) <br>
+        Date: {{ event.event_date}} | Time: {{event.event_time}} <br>
+        {{event.description}}
+      </li>
+      {%endfor%}
+
+    </ul>
     </center>
 
 
+
+<!--------------------------------------------------- FLASH ---------------------------------------------------->
     <br><br>
 
 

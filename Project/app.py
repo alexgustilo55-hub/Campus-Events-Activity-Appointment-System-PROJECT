@@ -100,8 +100,10 @@ def admin_dashboard():
             with conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
                 user = cursor.fetchone()  
+                cursor.execute("SELECT * FROM events")
+                events = cursor.fetchall()
         conn.close()
-        return render_template("admin_home.html", user=user)  
+        return render_template("admin_home.html", user=user, events = events)  
     else:
         return redirect(url_for("login"))
     
@@ -174,6 +176,41 @@ def admin_update_password():
     conn.close()
     return render_template("admin_changepass.html", user=user)
 
+#-------------------------------------- Admin Create Events ------------------------------#
+
+@app.route('/create_event', methods=['POST'])
+def create_event():
+    if request.method == 'POST':
+        name = request.form.get('event_name')
+        loc = request.form.get('location')
+        date = request.form.get('event_date')
+        time = request.form.get('event_time')
+        description = request.form.get('descriptions')
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        query = """
+        INSERT INTO events (event_name, location, event_date, event_time, description)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (name, loc, date, time, description))
+        conn.commit()
+        conn.close()
+        flash("Succesfully Create Events!!")
+        return redirect(url_for("admin_dashboard"))
+    
+
+@app.route('/events')
+def events():
+    if "username" in session:
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+            user = cursor.fetchone()
+        conn.close()
+        return render_template("admin_create_event.html", user=user)
+    
+    
 #-------------------------------------- User home page ------------------------------#
 
 @app.route('/home')
@@ -185,8 +222,11 @@ def home():
             with conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
                 user = cursor.fetchone()  
+                cursor.execute("SELECT * FROM events")
+                events = cursor.fetchall()
+
         conn.close()
-        return render_template("user_home.html", user=user)  
+        return render_template("user_home.html", user=user, events = events)  
     else:
         return redirect(url_for("login"))
     

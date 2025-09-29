@@ -29,15 +29,16 @@ nav {
     display: flex;
     justify-content: space-between;  
     align-items: center;
-    padding: 10px 40px;
+    padding: 10px 10px;
     height: 60px;
     position: relative;              
 }
 
 /* Logo */
 .logo img {
-    width: 120px;
-    height: 50px;
+    width: 220px;
+    height: 200px;
+    margin-top: 20px;
 }
 
 /*--- Nav links ---*/
@@ -167,28 +168,42 @@ nav {
 }
 /*------------------------------------------------- Flash Message Effects------------------------------------------------*/
 
+#flash-message {
+    position: fixed;
+    top: 60px;   /* taas ng navbar mo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+}
+
 .flash {
-  padding: 8px 12px;     
-  margin: 8px auto;
-  width: fit-content;     
-  max-width: 300px;        
-  border-radius: 6px;
-  font-size: 14px;         
-  font-weight: 500;
-  text-align: center;
-  animation: fadeOut 4s forwards; 
+    display: inline-block;
+    padding: 10px 16px;
+    margin: 5px auto;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0;
+    animation: fadeInOut 5s ease-in-out forwards;
+    pointer-events: auto;
 }
+
 .flash.success {
-  color: rgb(216, 214, 214);
-  background-color: green;
-  
+    background-color: #28a745;
 }
-.flash.error {
-  color:rgb(216, 214, 214);
-  background-color: red;
+
+.flash.error,
+.flash.danger {
+    background-color: #dc3545;
 }
-/* Animation */
-@keyframes fadeOut {
-  0%, 80% { opacity: 1; }
-  100% { opacity: 0; display: none; }
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    15% { opacity: 1; transform: translateY(0); }
+    70% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
 }

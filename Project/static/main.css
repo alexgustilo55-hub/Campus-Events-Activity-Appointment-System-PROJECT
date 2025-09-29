@@ -32,15 +32,16 @@ nav {
     display: flex;
     justify-content: space-between;  
     align-items: center;
-    padding: 10px 40px;
+    padding: 10px 10px;
     height: 60px;
     position: relative;              
 }
 
 /* Logo */
 .logo img {
-    width: 120px;
-    height: 50px;
+    width: 220px;
+    height: 200px;
+    margin-top: 20px;
 }
 
 /*--- Nav links ---*/
@@ -140,8 +141,35 @@ nav {
 }
 
 /*------------------------------------------- register page ----------------------------------------*/
-
-
+.container2 {
+    display: flex;
+    justify-content: center; /* gitna horizontally */
+    align-items: center;     /* gitna vertically */
+    
+    margin-top: 50px;
+}
+.logo-side img {
+    width: 400px;   /* palakihin mo kung gusto mo */
+    height: auto;
+    animation: slideFromLeft 1s ease-out forwards; /* bagong animation */
+}
+/* Animation galing left */
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px); /* start sa kaliwa */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);      /* natural position */
+    }
+}
+.right-side2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: -100px;
+}
 .register-box {
     background: #fff;
     padding: 5px 30px;
@@ -150,25 +178,21 @@ nav {
     width: 420px;
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
-    margin-top: 5px;
+    margin-top: -20px;
     height: 600px;
 }
-
-/* Title */
 .register-box h2 {
     margin-bottom: 10px;
     font-size: 26px;
     color: #333;
     font-weight: 600;
-    
 }
-
 /* Inputs & Selects */
 .register-box input,
 .register-box select {
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin: 5px 0;
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 15px;
@@ -213,7 +237,7 @@ nav {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 2px;
     transition: transform 0.2s, background 0.3s;
 }
 .register-box button:hover {
@@ -223,7 +247,7 @@ nav {
 /* ---------------------Login link-------------------- */
 
 .register-box p {
-    margin-top: 18px;
+    margin-top: 10px;
     font-size: 14px;
     color: #555;
 }
@@ -245,8 +269,35 @@ nav {
 
 /*------------------------------------------ Login Page -------------------------------------*/
 
-
-
+.container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     /* gitna vertically */
+    gap: px;               /* space sa pagitan ng logo at form */
+    margin-top: 50px;
+}
+.logo-side img {
+    width: 400px;   /* palakihin mo kung gusto mo */
+    height: auto;
+    animation: slideFromLeft 1s ease-out forwards; /* bagong animation */
+}
+/* Animation galing left */
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px); /* start sa kaliwa */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);      /* natural position */
+    }
+}
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
 .login-box {
     background: #fff;
     padding: 25px 40px;
@@ -256,8 +307,8 @@ nav {
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
     height: 400px;
+    margin-top: 60px;
 }
-/* ---- Title ----- */
 .login-box h2 {
 
     margin-bottom: 25px;
@@ -266,7 +317,6 @@ nav {
     font-weight: 600;
 }
 .select-role select {
-
     flex: 1;
     padding: 12px;
     border: 2px solid #ccc;
@@ -275,30 +325,58 @@ nav {
     font-size: 16px;
     transition: all 0.3s ease; 
     margin-top: 20px;
-
 }
 .select-role select:hover {
-
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     transform: scale(1.02);
 }
 .select-role select:focus {
-
     border-color: #28a745;
     box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
     transform: scale(1.05);
 }
 .login-box input {
-
     width: 100%;
     padding: 12px;
-    margin: 13px 0;
+    margin: 8px 0;
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 15px;
     transition: 0.3s;
     background: #fafafa;
+}
+.input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.input-container i {
+    position: absolute;
+    left: 14px;              
+    top: 50%;                  
+    transform: translateY(-50%); 
+    color: #555;
+    font-size: 18px;
+    pointer-events: none;      
+}
+.input-container input {
+    width: 100%;
+    height: 45px;              
+    line-height: 45px;         
+    padding: 0 12px 0 40px;   
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #fafafa;
+    transition: 0.3s;
+    box-sizing: border-box;    
+}
+.input-container input:focus {
+    border-color: #d6336c;
+    background: #fff;
+    box-shadow: 0px 0px 5px rgba(214,51,108,0.3);
+    outline: none;
 }
 .login-box input:focus {
     border-color: #d6336c;
@@ -315,7 +393,7 @@ nav {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 8px;
     transition: transform 0.2s, background 0.3s;
 }
 .login-box button:hover {
@@ -335,8 +413,6 @@ nav {
 .login-box a:hover {
     text-decoration: underline;
 }
-
-
 /*------------------------------------------- change password  ---------------------------------------*/
 
 .changepass-box{
@@ -417,7 +493,6 @@ nav {
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 /*--------------------------------------------*/
-
 .user_information {
     background-color: #fff;
     padding: 40px 40px;
@@ -449,34 +524,47 @@ nav {
 
 
 /*------------------------------------------- Flash Message Effects---------------------------------------*/
+#flash-message {
+    position: fixed;
+    top: 60px;   /* taas ng navbar mo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+}
 
 .flash {
-  padding: 8px 12px;     
-  margin: 8px auto;
-  width: fit-content;     
-  max-width: 300px;        
-  border-radius: 6px;
-  font-size: 14px;         
-  font-weight: 500;
-  text-align: center;
-  animation: fadeOut 4s forwards; 
+    display: inline-block;
+    padding: 10px 16px;
+    margin: 5px auto;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0;
+    animation: fadeInOut 5s ease-in-out forwards;
+    pointer-events: auto;
 }
-
 
 .flash.success {
-  color: rgb(216, 214, 214);
-  background-color: green;
-  
+    background-color: #28a745;
 }
-.flash.error {
-  color:rgb(216, 214, 214);
-  background-color: red;
+
+.flash.error,
+.flash.danger {
+    background-color: #dc3545;
 }
-/* Animation */
-@keyframes fadeOut {
-  0%, 80% { opacity: 1; }
-  100% { opacity: 0; display: none; }
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    15% { opacity: 1; transform: translateY(0); }
+    70% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
 }
+
+
 
 
 

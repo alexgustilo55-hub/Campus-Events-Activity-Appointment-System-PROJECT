@@ -26,30 +26,62 @@ def main():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-   if request.method == 'POST':
-       
-       role = request.form['role']
-       gender = request.form['gender']
-       id = request.form['id']
-       fullname = request.form['fullname']
-       phone = request.form['phone']
-       birthday = request.form['birthday']
-       email = request.form['email']
-       address = request.form['address']
-       username = request.form['username']
-       password = request.form['password']
+    if request.method == 'POST':
+        role = request.form.get('role')
+        gender = request.form.get('gender')
+        fullname = request.form.get('fullname')
+        phone = request.form.get('phone')
+        birthday = request.form.get('birthday')
+        email = request.form.get('email')
+        address = request.form.get('address')
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-       
-       conn = get_db_connection()
-       cursor = conn.cursor()
-       cursor.execute("INSERT INTO users (role,gender,id,full_name,phone,birthday, email, address, username, password) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (role,gender,id,fullname,phone,birthday, email, address, username, password))
-       conn.commit()
-       conn.close()
-       
-       flash("Registration successful!")
-       return redirect(url_for('login'))
-   
-   return render_template("register.html")
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # check kung existing na ang username
+        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+        existing_user = cursor.fetchone()
+
+        # check kung existing na ang email
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        existing_email = cursor.fetchone()
+
+        # check kung existing na ang phone
+        cursor.execute("SELECT * FROM users WHERE phone = %s", (phone,))
+        existing_phone = cursor.fetchone()
+
+        if existing_user:
+            flash("Username already taken!", "danger")
+            return render_template("register.html")  # balik sa register
+        elif existing_email:
+            flash("Email already registered!", "danger")
+            return render_template("register.html")  # balik sa register
+        elif existing_phone:
+            flash("Phone number already registered!", "danger")
+            return render_template("register.html")  # balik sa register
+        else:
+            cursor.execute("""
+                INSERT INTO users 
+                (email, username, password, phone, full_name, gender, role, address, birthday) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (email, username, password, phone, fullname, gender, role, address, birthday))
+            
+            conn.commit()
+            flash("Registration successful!", "success")
+            cursor.close()
+            conn.close()
+            return redirect(url_for('login'))
+
+        cursor.close()
+        conn.close()
+
+    return render_template("register.html")
+
+
+
+
         
 #------------------------------- User Login Process -------------------------------------#
 
@@ -178,60 +210,68 @@ def admin_update_password():
 
 #-------------------------------------- Admin Create Events ------------------------------#
 
-@app.route('/create_event', methods=['POST'])
+@app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+        user = cursor.fetchone()
+    conn.close()
+
     if request.method == 'POST':
+        # kunin ang data mula form
         name = request.form.get('event_name')
         loc = request.form.get('location')
-        date = request.form.get('event_date')
-        time = request.form.get('event_time')
-        description = request.form.get('descriptions')
+        event_date = request.form.get('event_date')  
+        event_time = request.form.get('event_time')  
 
+        # dagdagan ng seconds kung wala
+        if event_time and len(event_time) == 5:
+            event_time = event_time + ":00"
+
+        description = request.form.get('description')
+
+        # insert sa DB
         conn = get_db_connection()
         cursor = conn.cursor()
         query = """
-        INSERT INTO events (event_name, location, event_date, event_time, description)
-        VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO events (event_name, location, event_date, event_time, description)
+            VALUES (%s, %s, %s, %s, %s)
         """
-        cursor.execute(query, (name, loc, date, time, description))
+        cursor.execute(query, (name, loc, event_date, event_time, description))
         conn.commit()
         conn.close()
-        flash("Succesfully Create Events!!")
+
+        flash("Successfully created event!")
         return redirect(url_for("admin_dashboard"))
+
+    
+    return render_template("admin_create_event.html", user=user)
+
     
 
-@app.route('/events')
-def events():
-    if "username" in session:
-        conn = get_db_connection()
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
-            user = cursor.fetchone()
-        conn.close()
-        return render_template("admin_create_event.html", user=user)
-    
-    
-#-------------------------------------- User home page ------------------------------#
-
+#--------------------------------------- User Home Page --------------------------------------------#
 @app.route('/home')
 def home():
-
     if "username" in session:
         if "username" in session:
             conn = get_db_connection()
             with conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
-                user = cursor.fetchone()  
+                user = cursor.fetchone() 
+
                 cursor.execute("SELECT * FROM events")
                 events = cursor.fetchall()
-
+         
         conn.close()
-        return render_template("user_home.html", user=user, events = events)  
+        return render_template("user_home.html", user=user, events=events)  
     else:
         return redirect(url_for("login"))
     
 
-    
 #--------------------------------------- User Information --------------------------------------------#
 
 @app.route('/user_info')

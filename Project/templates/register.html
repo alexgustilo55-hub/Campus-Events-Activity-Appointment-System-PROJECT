@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Sign up</title>
-    <link rel="icon" type="image/png" href="static/img/logo.png">
+    <link rel="icon" type="image/png" href="static/img/logo2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
@@ -22,52 +23,97 @@
     </nav>
     </header>
 
-
-    <center>
-        <br>
-        <h1>Campus Events & Activity Appointment System</h1>
-        
-        
-    <div class="register-box">
-        <h2>Sign up</h2>
-    <form action="{{url_for('register')}}" method="POST">
-
-        <div class="form-row">
-        <select  type="role" name="role" required>
-            <option value="student">Student</option>
-            <option value="faculty">Faculty</option>
-            <option value="staff">Staff</option>
-        </select>
-
-        <select name="gender" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="custom">Custom</option>
-        </select>
+    <!-- Flash Messages  -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div id="flash-message">
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
         </div>
+        {% endif %}
+    {% endwith %}
 
-        <div class="form-row">
-            <input type="id" name="id"  placeholder = "ID Number" required>
-            <input type="name" name="fullname"  placeholder = "full Name" required>
-        </div>
+<div class="container2">
 
-        <div class="form-row">
-            <input type="tel" name="phone" placeholder="Phone Number" required>
-            <input type="date" name="birthday" placeholder="Birthday" required>
-        </div>
-
-        <input type="text" name="username"  placeholder = "Username" required>
-        <input type="email" name="email"  placeholder = "Email" required>
-        <input type="address" name="address"  placeholder = "Address" required>
-        <input type="password" name="password" placeholder = "Password" required>
-        
-        <button type="submit">Sign up</button>
-    </form>
-
-        <p>You have an account? <a href="{{url_for('login')}}">login</a></p>
-
+    <!-- Logo side -->
+    <div class="logo-side">
+        <img src="{{ url_for('static', filename='img/logo2.png') }}" alt="Big Logo">
     </div>
 
-      </center>
+    <!-- Right side -->
+    <div class="right-side2">
+        <div class="register-box">
+            <h2>Sign up</h2>
+
+            <form action="{{url_for('register')}}" method="POST">
+
+                <!-- Role & Gender -->
+                <div class="form-row">
+                    <select type="role" name="role" required>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="staff">Staff</option>
+                    </select>
+
+                    <select name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <!-- Phone & Birthday -->
+                <div class="form-row">
+                    <div class="input-container">
+                        <i class="bi bi-telephone"></i>
+                        <input type="tel" name="phone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="bi bi-calendar-event"></i>
+                        <input type="date" name="birthday" required>
+                    </div>
+                </div>
+
+                <!-- Full name -->
+                <div class="input-container">
+                    <i class="bi bi-person-vcard"></i>
+                    <input type="text" name="fullname" placeholder="Full Name" required>
+                </div>
+
+                <!-- Username -->
+                <div class="input-container">
+                    <i class="bi bi-person"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+
+                <!-- Email -->
+                <div class="input-container">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+
+                <!-- Address -->
+                <div class="input-container">
+                    <i class="bi bi-geo-alt"></i>
+                    <input type="text" name="address" placeholder="Address" required>
+                </div>
+
+                <!-- Password -->
+                <div class="input-container">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+            
+                <button type="submit">Sign up</button>
+            </form>
+
+            <p>You have an account? <a href="{{url_for('login')}}">Login</a></p>
+        </div>
+    </div>
+</div>
+
+
+    
 </body>
 </html>

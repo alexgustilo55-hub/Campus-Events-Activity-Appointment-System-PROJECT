@@ -19,9 +19,11 @@
         </div>
 
         <div class="nav-links">
-            <a href="{{url_for('admin_dashboard')}}">Home</a>
-            <a href=>Dashboard</a>
-            <a href=>Events</a>
+            <a href="{{url_for('admin_dashboard')}}"
+              class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+              Home
+            </a>
+            <a href="{{url_for('manage_events')}}">Manage Events</a>
             <a href=>Appointments</a>
             <a href=>Venue</a>
             <a href=>Calendar View</a>

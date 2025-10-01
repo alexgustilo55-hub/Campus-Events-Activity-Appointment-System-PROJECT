@@ -21,8 +21,7 @@
 
         <div class="nav-links">
             <a href="{{url_for('admin_dashboard')}}">Home</a>
-            <a href=>Dashboard</a>
-            <a href=>Events</a>
+            <a href="{{url_for('manage_events')}}">Manage Events</a>
             <a href=>Appointments</a>
             <a href=>Venue</a>
             <a href=>Calendar View</a>
@@ -68,7 +67,8 @@
 
     <p><b>Welcome</b> {{ user.full_name }}</p></center>
         <br>
-        <a href="{{url_for('admin_info')}}">
+        <a href="{{url_for('admin_info')}}"
+            class="{% if request.endpoint == 'admin_info' %}active{% endif %}">
             <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Admin Profile</a>
         <a href="{{url_for('admin_update_password')}}">
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password</a>
@@ -119,7 +119,7 @@
     <div class="side-bar">
         <a href="#">
           <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>Dashboard</a>
-        <a href="#">
+        <a href="{{url_for('create_event')}}">
           <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>Create Events</a>
         <a href="#">
           <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>Manage Appointments</a>

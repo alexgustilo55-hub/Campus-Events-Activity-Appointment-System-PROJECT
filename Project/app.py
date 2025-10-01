@@ -4,6 +4,7 @@ import pymysql,os
 app = Flask(__name__)
 app.secret_key = "12345"
 app.config['UPLOAD_FOLDER'] = "static/img_profile/"
+app.config['EVENT_UPLOADS'] = "static/img_events/"
 
 
 def get_db_connection():
@@ -40,27 +41,25 @@ def register():
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # check kung existing na ang username
+        
         cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
         existing_user = cursor.fetchone()
 
-        # check kung existing na ang email
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         existing_email = cursor.fetchone()
 
-        # check kung existing na ang phone
         cursor.execute("SELECT * FROM users WHERE phone = %s", (phone,))
         existing_phone = cursor.fetchone()
 
         if existing_user:
             flash("Username already taken!", "danger")
-            return render_template("register.html")  # balik sa register
+            return render_template("register.html")  
         elif existing_email:
             flash("Email already registered!", "danger")
-            return render_template("register.html")  # balik sa register
+            return render_template("register.html")  
         elif existing_phone:
             flash("Phone number already registered!", "danger")
-            return render_template("register.html")  # balik sa register
+            return render_template("register.html")  
         else:
             cursor.execute("""
                 INSERT INTO users 
@@ -79,10 +78,6 @@ def register():
 
     return render_template("register.html")
 
-
-
-
-        
 #------------------------------- User Login Process -------------------------------------#
 
 @app.route('/login', methods=['GET','POST'])
@@ -208,7 +203,10 @@ def admin_update_password():
     conn.close()
     return render_template("admin_changepass.html", user=user)
 
-#-------------------------------------- Admin Create Events ------------------------------#
+
+
+#-------------------------------------- Admin Create Events -----------------------------------#
+
 
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
@@ -222,38 +220,84 @@ def create_event():
     conn.close()
 
     if request.method == 'POST':
-        # kunin ang data mula form
         name = request.form.get('event_name')
-        loc = request.form.get('location')
-        event_date = request.form.get('event_date')  
-        event_time = request.form.get('event_time')  
-
-        # dagdagan ng seconds kung wala
-        if event_time and len(event_time) == 5:
-            event_time = event_time + ":00"
-
+        event_type = request.form.get('event_type')
         description = request.form.get('description')
+        event_date = request.form.get('event_date')
+        start_time = request.form.get('start_time')
+        end_time = request.form.get('end_time')
+        location = request.form.get('location')
 
-        # insert sa DB
+        
+        event_image_filename = None
+        if 'event_image' in request.files:
+            file = request.files['event_image']
+            if file and file.filename != '':
+                filename = file.filename
+                upload_path = os.path.join(app.config['EVENT_UPLOADS'], filename)
+                file.save(upload_path)
+                event_image_filename = filename  
+
         conn = get_db_connection()
         cursor = conn.cursor()
         query = """
-            INSERT INTO events (event_name, location, event_date, event_time, description)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO events (event_name, event_type, description, event_date, start_time, end_time, location, event_image)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(query, (name, loc, event_date, event_time, description))
+        cursor.execute(query, (name, event_type, description, event_date, start_time, end_time, location, event_image_filename))
         conn.commit()
         conn.close()
 
-        flash("Successfully created event!")
+        flash("Successfully created event!", "success")
         return redirect(url_for("admin_dashboard"))
 
-    
     return render_template("admin_create_event.html", user=user)
 
+#-------------------------------------- Admin Manage Events ----------------------------------------#
+
+@app.route('/manage_events')
+def manage_events():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # kunin muna ang user info
+    cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+    user = cursor.fetchone()
+    print("DEBUG user:", user)   
+
+    # kunin lahat ng events
+    cursor.execute("SELECT * FROM events ORDER BY event_date ASC")
+    events = cursor.fetchall()
+    print("DEBUG events:", events)   
+
+    conn.close()
+    return render_template("admin_manage_event.html", user=user, events=events)
+
+
+#-------------------------------------- Admin Delete Events ----------------------------------------#
+
+@app.route('/delete_event/<int:event_id>', methods=['GET'])
+def delete_event(event_id):
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
     
+    cursor.execute("DELETE FROM events WHERE event_id = %s", (event_id,))
+    conn.commit()
+
+    conn.close()
+    flash("Event deleted successfully!", "success")
+    return redirect(url_for("manage_events"))
+
+
 
 #--------------------------------------- User Home Page --------------------------------------------#
+
 @app.route('/home')
 def home():
     if "username" in session:
@@ -271,6 +315,27 @@ def home():
     else:
         return redirect(url_for("login"))
     
+#--------------------------------------- User Event Page ---------------------------------------------#
+@app.route('/u_event')
+def u_event():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # kunin muna ang user info
+    cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+    user = cursor.fetchone()
+    print("DEBUG user:", user)   
+
+    # kunin lahat ng events
+    cursor.execute("SELECT * FROM events ORDER BY event_date ASC")
+    events = cursor.fetchall()
+    print("DEBUG events:", events)   
+
+    conn.close()
+    return render_template("user_event.html", user=user, events=events)
 
 #--------------------------------------- User Information --------------------------------------------#
 

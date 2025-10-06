@@ -263,12 +263,10 @@ def manage_events():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # kunin muna ang user info
     cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
     user = cursor.fetchone()
     print("DEBUG user:", user)   
 
-    # kunin lahat ng events
     cursor.execute("SELECT * FROM events ORDER BY event_date ASC")
     events = cursor.fetchall()
     print("DEBUG events:", events)   
@@ -295,27 +293,90 @@ def delete_event(event_id):
     return redirect(url_for("manage_events"))
 
 
+#-------------------------------------- Admin Update Events ----------------------------------------#
+
+
+@app.route('/update_event/<int:event_id>', methods=['GET', 'POST'])
+def update_event(event_id):
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+    user = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM events WHERE event_id=%s", (event_id,))
+    event = cursor.fetchone()
+
+    if not event:
+        conn.close()
+        flash("Event not found!", "danger")
+        return redirect(url_for("manage_events"))
+
+    if request.method == 'POST':
+        
+        name = request.form.get('event_name')
+        event_type = request.form.get('event_type')
+        description = request.form.get('description')
+        event_date = request.form.get('event_date')
+        start_time = request.form.get('start_time')
+        end_time = request.form.get('end_time')
+        location = request.form.get('location')
+
+        event_image_filename = event['event_image']  
+        if 'event_image' in request.files:
+            file = request.files['event_image']
+            if file and file.filename != '':
+                filename = file.filename
+                upload_path = os.path.join(app.config['EVENT_UPLOADS'], filename)
+                file.save(upload_path)
+                event_image_filename = filename  
+
+        query = """
+            UPDATE events
+            SET event_name=%s, event_type=%s, description=%s, 
+                event_date=%s, start_time=%s, end_time=%s, 
+                location=%s, event_image=%s
+            WHERE event_id=%s
+        """
+        cursor.execute(query, (name, event_type, description, event_date,
+                               start_time, end_time, location, event_image_filename, event_id))
+        conn.commit()
+        conn.close()
+
+        flash("Event updated successfully!", "success")
+        return redirect(url_for("manage_events"))
+
+    conn.close()
+   
+    return render_template("admin_update_event.html", user=user, event=event)
+
 
 #--------------------------------------- User Home Page --------------------------------------------#
 
 @app.route('/home')
 def home():
-    if "username" in session:
-        if "username" in session:
-            conn = get_db_connection()
-            with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
-                user = cursor.fetchone() 
-
-                cursor.execute("SELECT * FROM events")
-                events = cursor.fetchall()
-         
-        conn.close()
-        return render_template("user_home.html", user=user, events=events)  
-    else:
+    if "username" not in session:
         return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+    user = cursor.fetchone()
+    print("DEBUG user:", user)   
+
+    cursor.execute("SELECT * FROM events ORDER BY event_date ASC")
+    events = cursor.fetchall()
+    print("DEBUG events:", events)   
+
+    conn.close()
+    return render_template("user_home.html", user=user, events=events)
     
 #--------------------------------------- User Event Page ---------------------------------------------#
+
 @app.route('/u_event')
 def u_event():
     if "username" not in session:
@@ -324,18 +385,43 @@ def u_event():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # kunin muna ang user info
+    
     cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
     user = cursor.fetchone()
     print("DEBUG user:", user)   
 
-    # kunin lahat ng events
+    
     cursor.execute("SELECT * FROM events ORDER BY event_date ASC")
     events = cursor.fetchall()
     print("DEBUG events:", events)   
 
     conn.close()
     return render_template("user_event.html", user=user, events=events)
+
+#--------------------------------------- User View Event Details ---------------------------------------------#
+
+@app.route('/view_details/<int:event_id>')
+def view_details(event_id):
+    if "username" in session:
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+           
+            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+            user = cursor.fetchone()  
+
+            
+            cursor.execute("SELECT * FROM events WHERE event_id=%s", (event_id,))
+            event = cursor.fetchone()
+        conn.close()
+
+        if event:
+            return render_template("user_eventdetails.html", user=user, event=event)
+        else:
+            return "Event not found", 404
+    else:
+        return redirect(url_for("login"))
+
+
 
 #--------------------------------------- User Information --------------------------------------------#
 
@@ -409,7 +495,7 @@ def update_password():
     return render_template("user_changepass.html", user=user)
 
 
-#--------------------------------------- Upload Profile Piture --------------------------------------------#
+#--------------------------------------- Upload Profile Picture --------------------------------------------#
 
 
 @app.route('/upload_profile', methods=['POST'])

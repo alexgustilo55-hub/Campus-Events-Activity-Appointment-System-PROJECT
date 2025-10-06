@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Event Details</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo2.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -42,7 +42,7 @@
             </div>
         </nav>
     </header>
-
+    
     <!-- ================= Profile Info ================= -->
     <div class="profile-card" id="profileCard">
         <center>
@@ -52,10 +52,9 @@
                      class="profile-card-img">
             {% else %}
                 <div class="profile-card-img placeholder">
-                    <i class="bi bi-person"></i>
+                    <i class="bi bi-person"></i> 
                 </div>
             {% endif %}
-
             <p><b>Welcome</b> {{ user.full_name }}</p>
         </center>
         <br>
@@ -63,13 +62,11 @@
         <a href="{{ url_for('user_info') }}">
             <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>User Profile
         </a>
-
         <a href="{{ url_for('update_password') }}">
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password
         </a>
-
         <a href=""></a>
-
+        
         <center>
             <br><br>
             <a href="{{ url_for('logout') }}">
@@ -77,68 +74,61 @@
             </a>
         </center>
     </div>
+        
+    <!-- ================= Event Details ================= -->
+    <main class="event-details-container">
 
-    <!-- ================= Main Content ================= -->
-    <br><br>
-    <center>
-        <h1>Welcome to Campus and Appointment System!!</h1>
-        <p>Your gateway to seamless appointment scheduling.</p>
-        <br><br><br>
-    </center>
+        <!-- Banner -->
+        <div class="event-banner">
+            {% if event.event_image %}
+                <img src="{{ url_for('static', filename='img_events/' + event.event_image) }}" alt="Event Banner">
+            {% else %}
+                <img src="{{ url_for('static', filename='img_events/default.jpg') }}" alt="Default Banner">
+            {% endif %}
+        </div>
 
-    <!-- ================= Events Section ================= -->
-    <div class="main-content">
-        <h2>Upcoming Events:</h2>
+        <!-- Page Content -->
+        <div class="event-wrapper">
 
-        <div class="event-grid">
-            {% for event in events %}
-            <div class="event-card">
-                <!-- Event Image -->
-                {% if event.event_image %}
-                    <a href="{{ url_for('view_details', event_id=event['event_id']) }}">
-                        <img src="{{ url_for('static', filename='img_events/' ~ event.event_image) }}" 
-                             alt="Event Image" 
-                             class="event-img">
-                    </a>
-                {% else %}
-                    <img src="{{ url_for('static', filename='img_events/default.jpg') }}" 
-                         alt="Default Event Image" 
-                         class="event-img">
-                {% endif %}
+            <!-- LEFT SIDE -->
+            <div class="event-left">
+                <h1 class="event-title">{{ event.event_name }}</h1>
+                <p class="event-subtitle">{{ event.event_type }}</p>
 
-                <div class="event-body">
-                    <!-- Event Title -->
-                    <h4>{{ event.event_name }}</h4>
+                <div class="event-meta">
+                    <span><i class="bi bi-calendar"></i> {{ event.event_date }}</span>
+                    <span><i class="bi bi-clock"></i> {{ event.start_time }} – {{ event.end_time }}</span>
+                    <span><i class="bi bi-geo-alt"></i> {{ event.location }}</span>
+                </div>
 
-                    <!-- Event Date & Time -->
-                    <div class="event-datetime">
-                        <span class="date">
-                            <i class="bi bi-calendar-event"></i> {{ event.event_date }}
-                        </span>
-                        <span class="time">
-                            <i class="bi bi-clock"></i> {{ event.start_time }} - {{ event.end_time }}
-                        </span>
-                    </div>
+                <a href="#" class="register-btn">Register Now</a>
 
-                    <!-- Event Location -->
-                    <p><i class="bi bi-geo-alt"></i> {{ event.location }}</p>
+                <section class="event-about">
+                    <h2>About the Event</h2>
+                    <p>{{ event.description }}</p>
+                </section>
+            </div>
 
-                    <!-- Event Type -->
-                    <p><i class="bi bi-tag"></i> {{ event.event_type }}</p>
+            <!-- RIGHT SIDE -->
+            <aside class="event-right">
+                <div class="event-card">
+                    <h2>Key Details</h2>
+                    <ul>
+                        <li><i class="bi bi-calendar"></i> <strong>Date:</strong> {{ event.event_date }}</li>
+                        <li><i class="bi bi-clock"></i> <strong>Time:</strong> {{ event.start_time }} – {{ event.end_time }}</li>
+                        <li><i class="bi bi-geo-alt"></i> <strong>Location:</strong> {{ event.location }}</li>
+                    </ul>
+                </div>
 
-                    <!-- Buttons -->
-                    <div class="btn-group">
-                        <a href="{{ url_for('view_details', event_id=event['event_id']) }}" class="btn-view">
-                            View Details
-                        </a>
+                <div class="event-card">
+                    <h2>Categories</h2>
+                    <div class="categories">
+                        <span>{{ event.event_type }}</span>
                     </div>
                 </div>
-            </div>
-            {% else %}
-            <p>No events available.</p>
-            {% endfor %}
+            </aside>
         </div>
-    </div>
+    </main>
 
     <!-- ================= Flash Messages ================= -->
     <br><br>

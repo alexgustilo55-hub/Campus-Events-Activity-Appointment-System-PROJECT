@@ -9,7 +9,7 @@ body{
   background: #ece5e5;
   color: #1a1a1a;
   margin: 0;
-  padding-top: 60px;  /* adjust depende sa height ng header */
+  padding-top: 60px;  
     
 }
 /*------------------------------- Header & Navbar -------------------------------*/
@@ -100,7 +100,7 @@ nav {
 
 .profile-card {
    display: none;
-    position: fixed; /* Changed from absolute */
+    position: fixed; 
     top: 70px;            
     right: 15px;            
     background-color: white; 
@@ -177,7 +177,7 @@ nav {
     margin-top: auto;
     
 }
-/*------------------------------------------------- Create Event Form ------------------------------------------------*/
+/*------------------------------------------------- Create Event & Update form ------------------------------------------------*/
 
 .container {
     max-width: 700px;
@@ -282,7 +282,7 @@ textarea {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* i-center ang laman horizontally */
+    align-items: center; 
 }
 
 .event-grid {
@@ -358,7 +358,7 @@ textarea {
 }
 
 
-/* === Title sa taas ng Events === */
+
 .main-content h2 {
     font-size: 1.6rem;
     font-weight: 600;
@@ -441,7 +441,7 @@ textarea {
 
 #flash-message {
     position: fixed;
-    top: 60px;   /* taas ng navbar mo */
+    top: 60px;   
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;

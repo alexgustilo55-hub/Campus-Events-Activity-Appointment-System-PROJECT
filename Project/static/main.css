@@ -9,7 +9,7 @@ body{
   background: #ece5e5;
   color: #1a1a1a;
   margin: 0;
-  padding-top: 60px;  /* adjust depende sa height ng header */
+  padding-top: 60px;  
     
 }
 
@@ -80,9 +80,9 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0; /* kulay background */
-    color: #555;               /* kulay ng icon */
-    font-size: 20px;           /* laki ng icon */
+    background-color: #f0f0f0; 
+    color: #555;               
+    font-size: 20px;          
 }
 
 .profile-icon:hover {
@@ -103,7 +103,7 @@ nav {
 
 .profile-card {
    display: none;
-    position: fixed; /* Changed from absolute */
+    position: fixed; 
     top: 70px;            
     right: 15px;            
     background-color: white; 
@@ -149,26 +149,15 @@ nav {
 /*------------------------------------------- register page ----------------------------------------*/
 .container2 {
     display: flex;
-    justify-content: center; /* gitna horizontally */
-    align-items: center;     /* gitna vertically */
+    justify-content: center; 
+    align-items: center;     
     
     margin-top: 50px;
 }
 .logo-side img {
-    width: 400px;   /* palakihin mo kung gusto mo */
+    width: 400px;   
     height: auto;
-    animation: slideFromLeft 1s ease-out forwards; /* bagong animation */
-}
-/* Animation galing left */
-@keyframes slideFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-100px); /* start sa kaliwa */
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);      /* natural position */
-    }
+    animation: slideFromLeft 1s ease-out forwards; 
 }
 .right-side2{
     display: flex;
@@ -183,7 +172,7 @@ nav {
     box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
     width: 420px;
     text-align: center;
-    animation: fadeIn 0.6s ease-in-out;
+    animation: slideFromTop 0.8s ease-out;
     margin-top: -20px;
     height: 600px;
 }
@@ -265,39 +254,22 @@ nav {
 .register-box a:hover {
     text-decoration: underline;
 }
-/* -Animation- */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-
 
 /*------------------------------------------ Login Page -------------------------------------*/
 
 .container {
     display: flex;
     justify-content: center; 
-    align-items: center;     /* gitna vertically */
-    gap: px;               /* space sa pagitan ng logo at form */
+    align-items: center;     
+    gap: px;               
     margin-top: 50px;
 }
 .logo-side img {
-    width: 400px;   /* palakihin mo kung gusto mo */
+    width: 400px;   
     height: auto;
-    animation: slideFromLeft 1s ease-out forwards; /* bagong animation */
+    animation: slideFromLeft 1s ease-out forwards; 
 }
-/* Animation galing left */
-@keyframes slideFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-100px); /* start sa kaliwa */
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);      /* natural position */
-    }
-}
+
 .right-side {
     display: flex;
     flex-direction: column;
@@ -311,10 +283,11 @@ nav {
     box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
     width: 350px;
     text-align: center;
-    animation: fadeIn 0.6s ease-in-out;
+    animation: slideFromTop 0.8s ease-out;
     height: 400px;
     margin-top: 60px;
 }
+
 .login-box h2 {
 
     margin-bottom: 25px;
@@ -418,6 +391,29 @@ nav {
 }
 .login-box a:hover {
     text-decoration: underline;
+}
+
+/* Animation Login & Sign Up */
+@keyframes slideFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-80px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+/* Animation Logo title Login & Sign up*/
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);      
+    }
 }
 /*------------------------------------------- change password  ---------------------------------------*/
 
@@ -533,7 +529,7 @@ nav {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* i-center ang laman horizontally */
+    align-items: center; 
 }
 
 .event-grid {
@@ -609,7 +605,7 @@ nav {
   align-items: center;
 }
 
-/* === Title sa taas ng Events === */
+
 .main-content h2 {
     font-size: 1.6rem;
     font-weight: 600;
@@ -622,12 +618,12 @@ nav {
     margin-top: 12px;
     display: flex;
     justify-content: center;
-    gap: 10px; /* pagitan ng dalawang button */
+    gap: 10px; 
 }
 
 /* View Details button */
 .btn-view {
-    background-color: #007bff; /* Blue */
+    background-color: #007bff; 
     color: #fff;
     padding: 8px 16px;
     border-radius: 6px;
@@ -645,7 +641,7 @@ nav {
 
 /* Register button */
 .btn-register {
-    background-color: #28a745; /* Green */
+    background-color: #28a745; 
     color: #fff;
     padding: 8px 16px;
     border-radius: 6px;
@@ -661,12 +657,186 @@ nav {
     transform: scale(1.05);
 }
 
+/* ===================================== Event Details Page =================================== */
+
+
+.event-details-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 20px 20px 12px 12px; 
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+}
+
+/* Banner */
+.event-banner img {
+    width: 100%;
+    height: 500px;   
+    object-fit: cover;
+    display: block;
+    animation: zoomIn 1.2s ease-in-out;
+}
+/* Grid Layout */
+.event-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding: 40px;
+    animation: slideUp 1.2s ease-in-out;
+}
+
+/* LEFT SIDE */
+.event-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #222;
+    animation: slideRight 1s ease-in-out;
+}
+
+.event-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+    animation: slideRight 1.2s ease-in-out;
+}
+
+.event-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 25px;
+    animation: fadeIn 1.3s ease-in-out;
+}
+
+.register-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #28a745;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    margin-bottom: 35px;
+    animation: bounceIn 1.5s ease-in-out;
+}
+.register-btn:hover {
+    background-color: #1e7e34;
+    transform: scale(1.05);
+}
+
+/* About */
+.event-about {
+    animation: fadeIn 1.6s ease-in-out;
+}
+.event-about h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    border-left: 5px solid #007bff;
+    padding-left: 12px;
+}
+.event-about p {
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* RIGHT SIDE */
+.event-right {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.event-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    animation: slideLeft 1.3s ease-in-out;
+}
+
+.event-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+.event-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.event-card ul li {
+    margin: 10px 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+.event-card ul li i {
+    margin-right: 8px;
+    color: #007bff;
+}
+
+/* Categories */
+.categories span {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    background: #eaeaea;
+    color: #333;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* ------------------- ANIMATIONS ------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+    from { transform: translateX(-40px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideLeft {
+    from { transform: translateX(40px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(1.1); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+
+
 
 
 /*------------------------------------------- Flash Message Effects---------------------------------------*/
 #flash-message {
     position: fixed;
-    top: 60px;   /* taas ng navbar mo */
+    top: 60px;  
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -697,6 +867,7 @@ nav {
     background-color: #dc3545;
 }
 
+/* Animation of Flash Message */
 @keyframes fadeInOut {
     0% { opacity: 0; transform: translateY(-10px); }
     15% { opacity: 1; transform: translateY(0); }

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Events</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo2.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="{{ url_for('static', filename='flash.js') }}"></script>
+</head>
+
+<body>
+    <!-- ================= HEADER / NAVBAR ================= -->
+    <header>
+        <nav>
+            <!-- Logo -->
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <a href="{{ url_for('organizer_home') }}">Home</a>
+                <a href="{{ url_for('organizer_manage_events') }}" 
+                   class="{% if request.endpoint == 'organizer_manage_events' %}active{% endif %}">
+                   Manage Events
+                </a>
+                <a href="#">Venue</a>
+                <a href="#">Calendar View</a>
+                <a href="#">About</a>
+            </div>
+
+            <div class="nav-links-right"></div>
+
+            <!-- Profile Icon -->
+            <div class="profile-icon" onclick="toggleProfile()">
+                {% if user.profile_pic %}
+                    <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
+                         alt="Profile Picture" 
+                         class="navbar-profile-img">
+                {% else %}
+                    <div class="navbar-profile-img placeholder">
+                        <i class="bi bi-person"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- ================= PROFILE CARD ================= -->
+    <div class="profile-card" id="profileCard">
+        <center>
+            {% if user.profile_pic %}
+                <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
+                     alt="Profile Picture" 
+                     class="profile-card-img">
+            {% else %}
+                <div class="profile-card-img placeholder">
+                    <i class="bi bi-person"></i> 
+                </div>
+            {% endif %}
+            <p><b>Welcome</b> {{ user.full_name }}</p>
+        </center>
+
+        <br>
+        <a href="{{ url_for('organizer_info') }}"> 
+            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Organizer Profile
+        </a>
+        <a href="{{ url_for('organizer_update_password') }}"> 
+            <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Change Password
+        </a>
+        
+        <br><br>
+        <a href="{{ url_for('logout') }}"> 
+            <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Logout
+        </a>
+    </div>
+
+    <!-- ================= SIDEBAR ================= -->
+    <div class="side-bar">
+        <a href="{{ url_for('organizer_home') }}">
+            <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Dashboard
+        </a>
+        <a href="{{ url_for('create_event') }}">
+            <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Create Events
+        </a>
+        <a href="#">
+            <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Manage Appointments
+        </a>
+        <a href="#">
+            <i class="bi bi-building-fill-add" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Book Venue
+        </a>
+        <a href="#">
+            <i class="bi bi-calendar" style="color:black; font-size:18px; margin-right:6px;"></i>
+            Calendar View
+        </a>
+
+        <div class="log-out">
+            <a href="{{ url_for('logout') }}"> 
+                <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>
+                Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- ================= MANAGE EVENTS PAGE ================= -->
+     
+    <div class="main-content">
+        <h2>My Organized Events</h2>
+
+        <div class="event-grid">
+            {% for event in events %}
+            <div class="event-card">
+                <!-- Event Image -->
+                {% if event.event_image %}
+                    <img src="{{ url_for('static', filename='img_events/' ~ event.event_image) }}" 
+                         alt="Event Image" class="event-img">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img_events/default.jpg') }}" 
+                         alt="Default Event Image" class="event-img">
+                {% endif %}
+
+                <div class="event-body">
+                    <!-- Event Title -->
+                    <h4>{{ event.event_name }}</h4>
+
+                    <!-- Event Date & Time -->
+                    <div class="event-datetime">
+                        <span class="date">
+                            <i class="bi bi-calendar-event"></i> {{ event.event_date }}
+                        </span>
+                        <span class="time">
+                            <i class="bi bi-clock"></i> {{ event.start_time }} - {{ event.end_time }}
+                        </span>
+                    </div>
+
+                    <!-- Event Location -->
+                    <p><i class="bi bi-geo-alt"></i> {{ event.location }}</p>
+
+                    <!-- Event Type -->
+                    <p><i class="bi bi-tag"></i> {{ event.event_type }}</p>
+
+                    <!-- Buttons -->
+                    <div class="btn-group">
+                        <a href="{{ url_for('org_delete_event', event_id=event.event_id) }}" 
+                           class="btn-delete" 
+                           onclick="return confirm('Are you sure you want to delete this event?');">
+                           Delete
+                        </a>
+                        <a href="{{ url_for('organizer_update_events', event_id=event.event_id) }}" 
+                           class="btn-update">
+                           Update
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>No events created yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ================= FLASH MESSAGE ================= -->
+    <br><br>
+    <center>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="flash-message">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </center>
+</body>
+</html>

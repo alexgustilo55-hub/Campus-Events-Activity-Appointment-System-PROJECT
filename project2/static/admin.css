@@ -51,12 +51,12 @@ nav {
 }
 
 .nav-links a:hover, .nav-links-right a:hover {
-    color: #f39c12;      
-    border-bottom: 2px solid #f39c12;
+    color: #007bff;      
+    border-bottom: 2px solid #007bff;
 }
 .nav-links a.active {
-    color: #f39c12;
-    border-bottom: 2px solid #f39c12;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
 }
 
 
@@ -137,10 +137,10 @@ nav {
     transition: color 0.3s, background 0.3s;
 }
 .profile-card a:hover {
-    color: #f39c12;     
+    color: #007bff;     
 }
 .profile-card a.active {
-    color: #f39c12;
+    color: #007bff;
     
 }
 /*------------------------------------ Side bar border ------------------------------------*/
@@ -168,10 +168,10 @@ nav {
     transition: color 0.3s, background 0.3s;
 }
 .side-bar a:hover{
-    color: #f39c12;
+    color: #007bff;
 }
 .side-bar a.active {
-    color: #f39c12;
+    color: #007bff;
 }
 .log-out{
     margin-top: auto;
@@ -563,4 +563,211 @@ textarea {
     15% { opacity: 1; transform: translateY(0); }
     70% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-20px); }
+}
+
+
+/* ===================== CALENDAR SECTION ===================== */
+
+.calendar-container {
+    max-width: 900px;
+    margin: 60px auto;
+    text-align: center;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeSlideUp 1s ease-out forwards;
+    opacity: 0;
+}
+
+/* Calendar Header (Month Navigation) */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    animation: fadeDown 1s ease-out forwards;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Day Headers (Sun, Mon, ...) */
+.day-header {
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    animation: slideDown 0.6s ease-out;
+}
+
+/* Calendar Days */
+.day,
+.day.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: popIn 0.5s ease-out forwards;
+}
+
+.day {
+    background: #f4f4f4;
+    color: #333;
+}
+
+.day:hover {
+    background: #d0e6ff;
+    transform: scale(1.05);
+}
+
+.day.today {
+    background: #007bff;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+}
+
+.day.selected {
+    background: #4CAF50;
+    color: white;
+}
+
+.day.has-events {
+    border: 2px solid #007bff;
+}
+
+.day.empty {
+    background: transparent;
+}
+
+/* ===================== ANIMATIONS ===================== */
+
+/* Whole container fade-up */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header smooth drop */
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Day pop-in animation */
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Day header slide down */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.day:nth-child(1) { animation-delay: 0.05s; }
+.day:nth-child(2) { animation-delay: 0.1s; }
+.day:nth-child(3) { animation-delay: 0.15s; }
+.day:nth-child(4) { animation-delay: 0.2s; }
+.day:nth-child(5) { animation-delay: 0.25s; }
+.day:nth-child(6) { animation-delay: 0.3s; }
+.day:nth-child(7) { animation-delay: 0.35s; }
+.day:nth-child(8) { animation-delay: 0.4s; }
+.day:nth-child(9) { animation-delay: 0.45s; }
+.day:nth-child(10) { animation-delay: 0.5s; }
+
+
+
+/* ======================== Modal CSS ======================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; 
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 20px;            
+    border: 3px solid #007bff;      
+    padding: 30px;
+    max-width: 450px;                
+    text-align: center;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    animation: modalSlideUp 0.3s ease forwards;
+}
+
+.close-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: #0056b3;
+}
+
+/* ======================== Animations ======================== */
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }

@@ -10,7 +10,7 @@ body{
   color: #1a1a1a;
   margin: 0;
   padding-top: 60px;  
-  padding-top: 80px; /* mas mataas para sa fixed header */
+  
     
 }
 
@@ -55,12 +55,12 @@ nav {
 }
 
 .nav-links a:hover, .nav-links-right a:hover {
-    color: #f39c12;      
-    border-bottom: 2px solid #f39c12;
+    color: #007bff;
+    border-bottom: 2px solid #3e6b9c;
 }
 .nav-links a.active {
-    color: #f39c12;
-    border-bottom: 2px solid #f39c12;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
 }
 /*------------------------------------ profile icon -----------------------------------*/
 
@@ -87,7 +87,7 @@ nav {
 }
 
 .profile-icon:hover {
-    color: #f39c12;      
+    color: #007bff;      
 }
 
 /* Animation Keyframes */
@@ -141,10 +141,10 @@ nav {
     transition: color 0.3s, background 0.3s;
 }
 .profile-card a:hover {
-    color: #f39c12;     
+    color: #007bff;     
 }
 .profile-card a.active {
-    color: #f39c12;
+    color: #007bff;
     
 }
 /*------------------------------------------- register page ----------------------------------------*/
@@ -240,7 +240,7 @@ nav {
     transform: scale(1.02);
     background: linear-gradient(135deg, #c42f60, #9c244c);
 }
-/* ---------------------Login link-------------------- */
+/* -------Login link----- */
 
 .register-box p {
     margin-top: 10px;
@@ -359,6 +359,7 @@ nav {
     outline: none;
 }
 /*---------------------------------- Organizer Type ----------------------------------*/
+
 .select-organizer-type {
     margin-top: 15px;
     width: 100%;
@@ -421,7 +422,7 @@ nav {
 .login-box button {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, #d6336c, #b02a54);
+    background: #007bff;
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -432,7 +433,7 @@ nav {
 }
 .login-box button:hover {
     transform: scale(1.02);
-    background: linear-gradient(135deg, #c42f60, #9c244c);
+    background: #0056b3;
 }
 .login-box p {
     margin-top: 18px;
@@ -440,7 +441,7 @@ nav {
     color: #555;
 }
 .login-box a {
-    color: #d6336c;
+    color: #007bff;
     text-decoration: none;
     font-weight: bold;
 }
@@ -500,7 +501,7 @@ nav {
 .changepass-box button {
     width: 90%;
     padding: 12px;
-    background: linear-gradient(135deg, #d6336c, #b02a54);
+    background: #007bff;
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -508,6 +509,10 @@ nav {
     cursor: pointer;
     margin-top: 20px;
     transition: transform 0.2s, background 0.3s;
+}
+.changepass-box button:hover {
+    transform: scale(1.02);
+    background: #0056b3;
 }
 
 /*------------------------------------------- User Information --------------------------------------*/
@@ -577,8 +582,152 @@ nav {
     color: #333;
 }
 
+/*------------------------------------- Home  -------------------===========--------------------*/
+
+.hero-section {
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    border-radius: 0 0 60px 60px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(-45deg, #004aad, #006eff, #0056d2, #003b8b);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite, fadeInHero 1.2s ease-out;
+}
+
+/* Entrance animation (like your event section) */
+@keyframes fadeInHero {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Gradient shifting animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-section .hero-content h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.hero-section .hero-content h1 span {
+    color: #ffd54f;
+}
+
+.hero-section .hero-content h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: #e8f0ff;
+    margin-bottom: 18px;
+}
+
+.hero-section .hero-content p {
+    font-size: 1.1rem;
+    color: #f0f4ff;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-hero,
+.btn-hero-outline {
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-hero {
+    background: #ffd54f;
+    color: #003b8b;
+    box-shadow: 0 4px 10px rgba(255, 213, 79, 0.3);
+}
+
+.btn-hero:hover {
+    background: #ffeb3b;
+    transform: translateY(-2px);
+}
+
+.btn-hero-outline {
+    border: 2px solid #ffd54f;
+    color: #ffd54f;
+    background: transparent;
+}
+
+.btn-hero-outline:hover {
+    background: #ffd54f;
+    color: #003b8b;
+    transform: translateY(-2px);
+}
+
 /*-------------------------------------------------  Events ------------------------------------------------*/
 
+/* ====================== EVENT HERO SECTION ====================== */
+.event-hero {
+    position: relative;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 0 0 60px 60px;
+    
+}
+
+.event-hero .hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.event-hero h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    animation: contentRise 1.3s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+
+.event-hero p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #e8e8e8;
+    letter-spacing: 0.5px;
+    animation: contentRise 1.3s ease-out forwards;
+    animation-delay: 0.8s;
+}
+
+/* Animation for entrance */
+.event-hero {
+    animation: fadeInHero 1s ease-in-out;
+}
+
+@keyframes fadeInHero {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/*--------------------*/
 .main-content {
     margin-left: 50px; 
     padding: 20px;
@@ -885,7 +1034,8 @@ nav {
 }
 
 
-/* ===================================================== USER REGISTRATION SECTION ============================================= */
+/* ============================== USER REGISTRATION SECTION ======================== */
+
 .user-registration {
     display: flex;
     justify-content: center;
@@ -1053,10 +1203,8 @@ nav {
 }
 
 
-/* ====================================== Calendar View ============================= */
-/* ======================== Calendar CSS ======================== */
 
-/* Calendar Container */
+/* ===================== CALENDAR SECTION ===================== */
 .calendar-container {
     max-width: 900px;
     margin: 60px auto;
@@ -1065,6 +1213,8 @@ nav {
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeSlideUp 1s ease-out forwards;
+    opacity: 0;
 }
 
 /* Calendar Header (Month Navigation) */
@@ -1073,13 +1223,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-}
-
-.nav-btn {
-    font-size: 1.5rem;
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
+    animation: fadeDown 1s ease-out forwards;
 }
 
 /* Calendar Grid */
@@ -1097,10 +1241,12 @@ nav {
     color: white;
     padding: 10px;
     border-radius: 8px;
+    animation: slideDown 0.6s ease-out;
 }
 
 /* Calendar Days */
-.day, .day.empty {
+.day,
+.day.empty {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1109,6 +1255,9 @@ nav {
     font-weight: bold;
     text-decoration: none;
     transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: popIn 0.5s ease-out forwards;
 }
 
 .day {
@@ -1118,6 +1267,7 @@ nav {
 
 .day:hover {
     background: #d0e6ff;
+    transform: scale(1.05);
 }
 
 .day.today {
@@ -1138,6 +1288,70 @@ nav {
 .day.empty {
     background: transparent;
 }
+
+/* ===================== ANIMATIONS ===================== */
+
+/* Whole container fade-up */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header smooth drop */
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Day pop-in animation */
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Day header slide down */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.day:nth-child(1) { animation-delay: 0.05s; }
+.day:nth-child(2) { animation-delay: 0.1s; }
+.day:nth-child(3) { animation-delay: 0.15s; }
+.day:nth-child(4) { animation-delay: 0.2s; }
+.day:nth-child(5) { animation-delay: 0.25s; }
+.day:nth-child(6) { animation-delay: 0.3s; }
+.day:nth-child(7) { animation-delay: 0.35s; }
+.day:nth-child(8) { animation-delay: 0.4s; }
+.day:nth-child(9) { animation-delay: 0.45s; }
+.day:nth-child(10) { animation-delay: 0.5s; }
+
+
 
 /* ======================== Modal CSS ======================== */
 
@@ -1199,13 +1413,13 @@ nav {
 
 /* =======================================  FOOTER ============================= */
 .site-footer {
-    background-color: #f5f5f5; 
-    color: #333;
+    background: linear-gradient(180deg, #003b8b 0%, #002b66 100%);
+    color: #f0f4ff;
     text-align: center;
-    padding: 25px 10px;
+    padding: 40px 10px;
     font-family: 'Poppins', sans-serif;
-    border-top: 1px solid #ddd;
-    margin-top: 50px;
+    margin-top: 70px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .site-footer .footer-container {
@@ -1214,32 +1428,34 @@ nav {
 }
 
 .site-footer h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
 }
 
 .site-footer p {
-    margin: 4px 0;
+    margin: 5px 0;
     font-size: 0.9rem;
+    color: #dce6ff;
 }
 
 .site-footer strong {
-    color: #007bff; /* subtle blue accent to match your buttons */
+    color: #ffd54f; /* same accent as hero buttons */
 }
 
 .site-footer .rights {
     font-size: 0.8rem;
-    color: #666;
-    margin-top: 8px;
+    color: #b0c4ff;
+    margin-top: 10px;
 }
 
 /* Optional hover accent */
 .site-footer:hover {
-    background-color: #eeeeee;
-    transition: 0.3s ease-in-out;
+    background: linear-gradient(180deg, #004aad 0%, #003b8b 100%);
+    transition: 0.4s ease-in-out;
 }
+
 
 
 

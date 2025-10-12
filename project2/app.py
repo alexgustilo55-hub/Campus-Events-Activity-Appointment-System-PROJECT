@@ -329,6 +329,82 @@ def update_event(event_id):
    
     return render_template("admin_update_event.html", user=user, event=event)
 
+#--------------------------------------- Admin Calendar View --------------------------------------------#
+@app.route("/admin_calendar")
+def admin_calendar_view():
+    
+    if "username" not in session:
+        return redirect(url_for("login"))
+    username = session["username"]
+    
+    # ✅ Get today
+    today = datetime.date.today()
+
+    # ✅ Get query params for month/year
+    month = request.args.get('month', today.month, type=int)
+    year = request.args.get('year', today.year, type=int)
+
+    # ✅ Compute previous and next month/year
+    prev_month = month - 1 if month > 1 else 12
+    prev_year = year if month > 1 else year - 1
+    next_month = month + 1 if month < 12 else 1
+    next_year = year if month < 12 else year + 1
+
+    # ✅ Selected date for modal
+    selected_date_str = request.args.get("selected_date")
+    if selected_date_str:
+        selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
+    else:
+        selected_date = None
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # ✅ Get user info
+    cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+    user = cursor.fetchone()
+
+    # ✅ Get all events for the month
+    first_day = datetime.date(year, month, 1)
+    last_day = datetime.date(year, month, calendar.monthrange(year, month)[1])
+    cursor.execute("SELECT * FROM events WHERE event_date BETWEEN %s AND %s", (first_day, last_day))
+    events = cursor.fetchall()
+
+    # ✅ Get events on selected date
+    selected_events = []
+    if selected_date:
+        cursor.execute("SELECT * FROM events WHERE event_date=%s", (selected_date,))
+        selected_events = cursor.fetchall()
+
+    conn.close()
+
+    # ✅ Calendar setup
+    current_month_name = calendar.month_name[month]
+    first_weekday, num_days = calendar.monthrange(year, month)
+    days = []
+
+    for _ in range((first_weekday + 1) % 7):
+        days.append(None)
+    for d in range(1, num_days + 1):
+        days.append(datetime.date(year, month, d))
+
+    return render_template(
+        "admin_calendar.html",
+        user=user,
+        today=today,
+        selected_date=selected_date,
+        selected_events=selected_events,
+        current_year=year,
+        current_month=month,
+        current_month_name=current_month_name,
+        days=days,
+        events=events,
+        prev_month=prev_month,
+        prev_year=prev_year,
+        next_month=next_month,
+        next_year=next_year
+    )
+
 #-------------------------------------- Organizer Home Page ----------------------------------------#
 
 @app.route('/organizer_home')
@@ -559,6 +635,81 @@ def organizer_update_events(event_id):
     return render_template("org_update_event.html", user = user, event = event)
 
 
+#--------------------------------------- Organizer Calendar View --------------------------------------------#
+@app.route("/org_calendar")
+def org_calendar_view():
+    
+    if "username" not in session:
+        return redirect(url_for("login"))
+    username = session["username"]
+    
+    # ✅ Get today
+    today = datetime.date.today()
+
+    # ✅ Get query params for month/year
+    month = request.args.get('month', today.month, type=int)
+    year = request.args.get('year', today.year, type=int)
+
+    # ✅ Compute previous and next month/year
+    prev_month = month - 1 if month > 1 else 12
+    prev_year = year if month > 1 else year - 1
+    next_month = month + 1 if month < 12 else 1
+    next_year = year if month < 12 else year + 1
+
+    # ✅ Selected date for modal
+    selected_date_str = request.args.get("selected_date")
+    if selected_date_str:
+        selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
+    else:
+        selected_date = None
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # ✅ Get user info
+    cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+    user = cursor.fetchone()
+
+    # ✅ Get all events for the month
+    first_day = datetime.date(year, month, 1)
+    last_day = datetime.date(year, month, calendar.monthrange(year, month)[1])
+    cursor.execute("SELECT * FROM events WHERE event_date BETWEEN %s AND %s", (first_day, last_day))
+    events = cursor.fetchall()
+
+    # ✅ Get events on selected date
+    selected_events = []
+    if selected_date:
+        cursor.execute("SELECT * FROM events WHERE event_date=%s", (selected_date,))
+        selected_events = cursor.fetchall()
+
+    conn.close()
+
+    # ✅ Calendar setup
+    current_month_name = calendar.month_name[month]
+    first_weekday, num_days = calendar.monthrange(year, month)
+    days = []
+
+    for _ in range((first_weekday + 1) % 7):
+        days.append(None)
+    for d in range(1, num_days + 1):
+        days.append(datetime.date(year, month, d))
+
+    return render_template(
+        "org_calendar.html",
+        user=user,
+        today=today,
+        selected_date=selected_date,
+        selected_events=selected_events,
+        current_year=year,
+        current_month=month,
+        current_month_name=current_month_name,
+        days=days,
+        events=events,
+        prev_month=prev_month,
+        prev_year=prev_year,
+        next_month=next_month,
+        next_year=next_year
+    )
 #--------------------------------------- User Home Page --------------------------------------------#
 
 @app.route('/home')
@@ -627,11 +778,6 @@ def view_details(event_id):
     else:
         return redirect(url_for("login"))
     
- #--------------------------------------- User Calendar ---------------------------------------------#
-
-
-
-
 #----------------------------------------- User Register to events -----------------------------------------#
 
 @app.route('/user_register' , methods = ["GET", "POST"])
@@ -764,10 +910,10 @@ def upload_profile():
     return redirect(url_for("user_info"))
 
 
-#--------------------------------------- Calendar View --------------------------------------------#
+#--------------------------------------- User Calendar View --------------------------------------------#
 @app.route("/calendar")
 def calendar_view():
-    # ✅ Check login
+    
     if "username" not in session:
         return redirect(url_for("login"))
     username = session["username"]
@@ -839,7 +985,6 @@ def calendar_view():
         next_month=next_month,
         next_year=next_year
     )
-
 
 #----------------------------------------- Logout -----------------------------------------#
 

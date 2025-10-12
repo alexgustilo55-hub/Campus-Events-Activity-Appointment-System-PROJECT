@@ -20,10 +20,8 @@
 
             <!-- Navigation Links -->
             <div class="nav-links">
-                <a href="{{ url_for('admin_dashboard') }}">Home</a>
                 <a href="{{ url_for('manage_events') }}">Manage Events</a>
                 <a href="#">Appointments</a>
-                <a href="#">Venue</a>
                 <a href="#">Calendar View</a>
                 <a href="#">About</a>
             </div>
@@ -85,7 +83,7 @@
 
     <!-- ====================================== SIDEBAR ===================================== -->
     <div class="side-bar">
-        <a href="#">
+        <a href="{{url_for('admin_dashboard')}}">
             <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>
             Dashboard
         </a>
@@ -98,11 +96,6 @@
         <a href="#">
             <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>
             Manage Appointments
-        </a>
-
-        <a href="#">
-            <i class="bi bi-building-fill-add" style="color:black; font-size:18px; margin-right:6px;"></i>
-            Book Venue
         </a>
 
         <a href="#">

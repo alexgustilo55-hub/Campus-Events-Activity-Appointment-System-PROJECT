@@ -19,7 +19,7 @@
 
             <div class="nav-links">
                 <a href="{{ url_for('organizer_home') }}">Home</a>
-                <a href="{{ url_for('manage_events') }}">Manage Events</a>
+                <a href="{{ url_for('organizer_manage_events') }}">Manage Events</a>
                 <a href="#">Venue</a>
                 <a href="#">Calendar View</a>
                 <a href="#">About</a>
@@ -81,7 +81,7 @@
         <br>
         <div class="changepass-box">
             <h2>Change your Password</h2>
-            <form action="{{ url_for('organization_update_password') }}" method="POST">
+            <form action="{{ url_for('organizer_update_password') }}" method="POST">
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="current_password" placeholder="Current Password" required>
                 <input type="password" name="new_password" placeholder="New Password" required>

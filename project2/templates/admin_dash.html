@@ -3,7 +3,7 @@
 <head>
     <title>Home</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo2.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='org.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="{{url_for('static', filename='flash.js')}}"></script>
 </head>
@@ -16,14 +16,11 @@
             <div class="logo">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
             </div>
-            
+
             <!-- Navigation Links -->
             <div class="nav-links">
-                <a href="{{url_for('organizer_home')}}"
-                   class="{% if request.endpoint == 'organizer_home' %}active{% endif %}">
-                   Home
-                </a>
-                <a href="{{url_for('organizer_manage_events')}}">Manage Events</a>
+                <a href="{{url_for('manage_events')}}">Manage Events</a>
+                <a href=>Appointments</a>
                 <a href=>Calendar View</a>
                 <a href=>About</a>
             </div>
@@ -32,7 +29,6 @@
             <div class="nav-links-right"></div>
 
             <!-------------------------------- Navbar Profile Icon -------------------------------->
-
             <div class="profile-icon" onclick="toggleProfile()">
                 {% if user.profile_pic %}
                     <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
@@ -63,12 +59,13 @@
         </center>
         <br>
 
-        <a href="{{url_for('organizer_info')}}"> 
-            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Organizer Profile
+        <a href="{{url_for('admin_info')}}"> 
+            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Admin Profile
         </a>
-        <a href="{{url_for('organizer_update_password')}}"> 
+        <a href="{{url_for('admin_update_password')}}"> 
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password
         </a>
+        
         <br><br>
         <a href="{{ url_for('logout') }}"> 
             <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>Logout
@@ -78,12 +75,14 @@
     <!-------------------------------------------- Side Bar -------------------------------------------------->
 
     <div class="side-bar">
-        <a href="#">
+        <a href="{{url_for('admin_dashboard')}}"
+            class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
             <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>Dashboard
         </a>
-        <a href="{{url_for('create_event')}}">
-            <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>Create Events
+        <a href="#">
+            <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>Manage Appointments
         </a>
+        
         <a href="#">
             <i class="bi bi-calendar" style="color:black; font-size:18px; margin-right:6px;"></i>Calendar View
         </a>
@@ -95,15 +94,76 @@
         </div>
     </div>
 
-    <!-------------------------------------------- Main Content -------------------------------------------------->
-    <br><br>
-    <center>
-        <h1>Welcome Organizer!!!!</h1>
-        <p>Manage Your Event </p>yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-        <br><br><br>
-    </center>
+    
+    <!-- ================================== Admin Dashboard Section ================================= -->
 
-    <!-------------------------------------------- Flash Messages -------------------------------------------------->
+<div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+    <p>Overview of campus activities, requests, and system performance.</p>
+
+    <!-- Top Statistic Cards -->
+    <div class="dashboard-cards">
+        <div class="card">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <p style="margin: 0;">Total Events</p>
+                <i class="bi bi-calendar-event" style="font-size: 2rem; color: #007bff;"></i>
+            </div>
+
+            <h3>{{ total_events }}</h3>
+        </div>
+        
+        
+        <div class="card">
+            <p>Pending Requests</p>
+            <h3></h3>
+        </div>
+        <div class="card">
+            <p>Total Users</p>
+            <h3></h3>
+        </div>
+       
+    </div>
+
+    <!-- Tables -->
+    <div class="dashboard-tables">
+
+        <!-- Recent Activities -->
+        <div class="recent-activities">
+            <h3>Recent Activities</h3>
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Item</th>
+                    <th>Date</th>
+                </tr>
+                {% for activity in recent_activities %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Approval Queues -->
+        <div class="approval-queues">
+            <h3>Approval Queues</h3>
+            <table>
+                <tr>
+                    <th>Student</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+               
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+    <!---------------- Flash Messages ------------------->
     <br><br>
     <center>
         {% with messages = get_flashed_messages(with_categories=true) %}

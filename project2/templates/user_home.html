@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="{{ url_for('static', filename='flash.js') }}"></script>
+    
 </head>
 
 <body>
@@ -22,7 +23,7 @@
                    Home
                 </a>
                 <a href="{{ url_for('u_event') }}">Events</a>
-                <a href="#">Calendar</a>
+                <a href="{{url_for('calendar_view')}}">Calendar</a>
                 <a href="#">Book Appointment</a>
                 <a href="#">About</a>
             </div>
@@ -44,6 +45,7 @@
     </header>
 
     <!-- ================= Profile Info ================= -->
+
     <div class="profile-card" id="profileCard">
         <center>
             {% if user.profile_pic %}
@@ -81,9 +83,11 @@
     <!-- ================= Main Content ================= -->
     <br><br>
     <center>
-        <h1>Welcome to Campus and Appointment System!!</h1>
+        <h1>Welcome to Campus Event & Activity</h1>
+        <h1>Appointment System</h1>
+        <br>
         <p>Your gateway to seamless appointment scheduling.</p>
-        <br><br><br>
+        <br><br>
     </center>
 
     <!-- ================= Events Section ================= -->
@@ -151,5 +155,18 @@
             </div>
         {% endif %}
     {% endwith %}
+
+<!-- ===================== Footer ========================== -->
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <h2>Campus Event & Activity Appointment System</h2>
+        <p>Developed by <strong>Ecela Group</strong> from <strong>BSIT 2-2</strong></p>
+        <p><strong>University of Iloilo</strong></p>
+        <hr>
+        <p class="rights">© 2025 All Rights Reserved</p>
+    </div>
+</footer>
+
 </body>
 </html>

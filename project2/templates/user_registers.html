@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo2.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="{{ url_for('static', filename='flash.js') }}"></script>
+    
+</head>
+
+<body>
+    <!-- ================= Header ================= -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
+            </div>
+
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" 
+                   class="{% if request.endpoint == 'home' %}active{% endif %}">
+                   Home
+                </a>
+                <a href="{{ url_for('u_event') }}">Events</a>
+                <a href="#">Calendar</a>
+                <a href="#">Book Appointment</a>
+                <a href="#">About</a>
+            </div>
+
+            <div class="nav-links-right"></div>
+
+            <div class="profile-icon" onclick="toggleProfile()">
+                {% if user.profile_pic %}
+                    <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
+                         alt="Profile Picture" 
+                         class="navbar-profile-img">
+                {% else %}
+                    <div class="navbar-profile-img placeholder">
+                        <i class="bi bi-person"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- ================= Profile Info ================= -->
+
+    <div class="profile-card" id="profileCard">
+        <center>
+            {% if user.profile_pic %}
+                <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
+                     alt="Profile Picture" 
+                     class="profile-card-img">
+            {% else %}
+                <div class="profile-card-img placeholder">
+                    <i class="bi bi-person"></i>
+                </div>
+            {% endif %}
+
+            <p><b>Welcome</b> {{ user.full_name }}</p>
+        </center>
+        <br>
+
+        <a href="{{ url_for('user_info') }}">
+            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>User Profile
+        </a>
+
+        <a href="{{ url_for('update_password') }}">
+            <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password
+        </a>
+
+        <a href=""></a>
+
+        <center>
+            <br><br>
+            <a href="{{ url_for('logout') }}">
+                <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>Logout
+            </a>
+        </center>
+    </div>
+
+    <!-- ====================== MAIN CONTENT ====================== -->
+
+    <br><br>
+    <center>
+        <h1>“Together, we build memories and milestones through campus events.”</h1>
+        <p>Your gateway to seamless appointment scheduling.</p>
+        
+    </center>
+
+    <!-- ====================== USER REGISTRATION FORM ====================== -->
+<div class="user-registration">
+    <div class="user-registration-container">
+        <form action="/user_register" method="POST" class="user-registration-form">
+            <h1>Student Appointment Registration</h1>
+
+            <label>Student Name</label>
+            <input type="text" name="s_names" placeholder="Enter your full name" required>
+
+            <label>Student No#</label>
+            <input type="text" name="s_number" placeholder="e.g., S12345678" required>
+
+            <label>Email Address</label>
+            <input type="email" id="s_email" name="s_email" placeholder="e.g., name@example.edu" required>
+
+            <label>Course Program</label>
+            <select id="s_course" name="s_course" required>
+                <option value="">Select Course Program</option>
+                <option value="Bachelor Of Science In Information Technology">Bachelor Of Science In Information Technology</option>
+                <option value="Bachelor Of Science In Business Administration">Bachelor Of Science In Business Administration</option>
+                <option value="Bachelor Of Science In Criminology">Bachelor Of Science In Criminology</option>
+                <option value="Bachelor Of Science In College Of Education">Bachelor Of Science In College Of Education</option>
+                <option value="Bachelor Of Science In Civil Engineer">Bachelor Of Science In Civil Engineer</option>
+                <option value="Bachelor Of Science In Nursing">Bachelor Of Science In Nursing</option>
+                <option value="Bachelor Of Science In Pharmacy">Bachelor Of Science In Pharmacy</option>
+                <option value="Bachelor Of Science In Tourism Management">Bachelor Of Science In Tourism Management</option>
+                <option value="Bachelor Of Science In Hospitality Management">Bachelor Of Science In Hospitality Management</option>
+            </select>
+
+            <label>Year Level</label>
+            <select id="year_level" name="s_year" required>
+                <option value="">Select Year Level</option>
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+            </select>
+
+            <label>Preferred Appointment Time</label>
+            <input type="time" name="s_time" required>
+
+            <label>Any Comments (Optional)</label>
+            <textarea name="comments" rows="3" placeholder="Add any additional comments or requests here."></textarea>
+
+            <div class="form-buttons">
+                <button type="button" class="btn-cancel"
+                    onclick="if(confirm('Are you sure you want to cancel registration and return to the event page?')){ window.location.href='/u_event'; }">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-submit">Confirm Registration</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <!-- ================= FLASH MESSAGE ================= -->
+    <br><br>
+    <center>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="flash-message">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </center>
+
+
+    <!-- ===================== Footer ========================== -->
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <h2>Campus Event & Activity Appointment System</h2>
+        <p>Developed by <strong>Ecela Group</strong> from <strong>BSIT 2-2</strong></p>
+        <p><strong>University of Iloilo</strong></p>
+        <hr>
+        <p class="rights">© 2025 All Rights Reserved</p>
+    </div>
+</footer>
+
+
+
+</body>
+</html>

@@ -23,7 +23,7 @@
                    Home
                 </a>
                 <a href="{{ url_for('u_event') }}">Events</a>
-                <a href="#">Calendar</a>
+                <a href="{{url_for('calendar_view')}}">Calendar</a>
                 <a href="#">Book Appointment</a>
                 <a href="#">About</a>
             </div>
@@ -76,7 +76,8 @@
         </center>
     </div>
         
-    <!-- ================= Event Details ================= -->
+    <!-- ============================ Event Details ============================= -->
+
     <main class="event-details-container">
 
         <!-- Banner -->
@@ -102,7 +103,7 @@
                     <span><i class="bi bi-geo-alt"></i> {{ event.location }}</span>
                 </div>
 
-                <a href="#" class="register-btn">Register Now</a>
+                <a href="{{url_for('user_register')}}" class="register-btn">Register Now</a>
 
                 <section class="event-about">
                     <h2>About the Event</h2>

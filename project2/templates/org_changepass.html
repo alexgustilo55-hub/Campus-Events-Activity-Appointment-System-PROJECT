@@ -20,8 +20,7 @@
             <div class="nav-links">
                 <a href="{{ url_for('organizer_home') }}">Home</a>
                 <a href="{{ url_for('organizer_manage_events') }}">Manage Events</a>
-                <a href="#">Venue</a>
-                <a href="#">Calendar View</a>
+                <a href="{{url_for('org_calendar_view')}}">Calendar View</a>
                 <a href="#">About</a>
             </div>
 
@@ -64,7 +63,7 @@
             Admin Profile
         </a>
         <a href="{{ url_for('organizer_update_password') }}"
-           class="{% if request.endpoint == 'update_update_password' %}active{% endif %}">
+           class="{% if request.endpoint == 'organizer_update_password' %}active{% endif %}">
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>
             Change Password
         </a>
@@ -102,11 +101,7 @@
             Create Events
         </a>
 
-        <a href="#">
-            <i class="bi bi-building-fill-add" style="color:black; font-size:18px; margin-right:6px;"></i>
-            Book Venue
-        </a>
-        <a href="#">
+        <a href="{{url_for('org_calendar_view')}}">
             <i class="bi bi-calendar" style="color:black; font-size:18px; margin-right:6px;"></i>
             Calendar View
         </a>

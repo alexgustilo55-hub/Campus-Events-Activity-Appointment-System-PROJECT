@@ -24,7 +24,7 @@
                    class="{% if request.endpoint == 'u_event' %}active{% endif %}">
                    Events
                 </a>
-                <a href="#">Calendar</a>
+                <a href="{{url_for('calendar_view')}}">Calendar</a>
                 <a href="#">Book Appointment</a>
                 <a href="#">About</a>
             </div>
@@ -83,13 +83,13 @@
         </center>
     </div>
         
-    <!-- ====================== MAIN CONTENT ====================== -->
-    <br><br>
-    <center>
+<!-- ====================== MAIN CONTENT ====================== -->
+<section class="event-hero">
+    <div class="hero-content">
         <h1>Together, we build memories and milestones through campus events</h1>
         <p>Your gateway to seamless appointment scheduling.</p>
-        <br><br><br>
-    </center>
+    </div>
+</section>
     
     <!-- ====================== EVENTS PAGE ====================== -->
     <div class="main-content">

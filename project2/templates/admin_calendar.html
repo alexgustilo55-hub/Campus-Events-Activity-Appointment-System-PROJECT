@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Calendar View</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo2.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='org.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <script src="{{url_for('static', filename='flash.js')}}"></script>
 </head>
@@ -16,15 +16,14 @@
             <div class="logo">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" height="40">
             </div>
-            
+
             <!-- Navigation Links -->
             <div class="nav-links">
-                <a href="{{url_for('organizer_home')}}"
-                   class="{% if request.endpoint == 'organizer_home' %}active{% endif %}">
-                   Home
-                </a>
-                <a href="{{url_for('organizer_manage_events')}}">Manage Events</a>
-                <a href="{{url_for('org_calendar_view')}}">Calendar View</a>
+                <a href="{{url_for('manage_events')}}">Manage Events</a>
+                <a href=>Appointments</a>
+                <a href="{{url_for('admin_calendar_view')}}"
+                    class="{% if request.endpoint == 'admin_calendar_view' %}active{% endif %}">
+                    Calendar View</a>
                 <a href=>About</a>
             </div>
 
@@ -32,7 +31,6 @@
             <div class="nav-links-right"></div>
 
             <!-------------------------------- Navbar Profile Icon -------------------------------->
-
             <div class="profile-icon" onclick="toggleProfile()">
                 {% if user.profile_pic %}
                     <img src="{{ url_for('static', filename='img_profile/' + user['profile_pic']) }}" 
@@ -63,12 +61,13 @@
         </center>
         <br>
 
-        <a href="{{url_for('organizer_info')}}"> 
-            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Organizer Profile
+        <a href="{{url_for('admin_info')}}"> 
+            <i class="bi bi-person" style="color:black; font-size:18px; margin-right:6px;"></i>Admin Profile
         </a>
-        <a href="{{url_for('organizer_update_password')}}"> 
+        <a href="{{url_for('admin_update_password')}}"> 
             <i class="bi bi-key" style="color:black; font-size:18px; margin-right:6px;"></i>Change Password
         </a>
+        
         <br><br>
         <a href="{{ url_for('logout') }}"> 
             <i class="bi bi-box-arrow-left" style="color:black; font-size:18px; margin-right:6px;"></i>Logout
@@ -78,13 +77,15 @@
     <!-------------------------------------------- Side Bar -------------------------------------------------->
 
     <div class="side-bar">
-        <a href="#">
+        <a href="{{url_for('admin_dashboard')}}">
             <i class="bi bi-speedometer2" style="color:black; font-size:18px; margin-right:6px;"></i>Dashboard
         </a>
-        <a href="{{url_for('create_event')}}">
-            <i class="bi bi-pencil-square" style="color:black; font-size:18px; margin-right:6px;"></i>Create Events
-        </a>
         <a href="#">
+            <i class="bi bi-calendar3" style="color:black; font-size:18px; margin-right:6px;"></i>Manage Appointments
+        </a>
+        
+        <a href="{{url_for('admin_calendar_view')}}"
+            class="{% if request.endpoint == 'admin_calendar_view' %}active{% endif %}">
             <i class="bi bi-calendar" style="color:black; font-size:18px; margin-right:6px;"></i>Calendar View
         </a>
 
@@ -95,15 +96,64 @@
         </div>
     </div>
 
-    <!-------------------------------------------- Main Content -------------------------------------------------->
-    <br><br>
-    <center>
-        <h1>Welcome Organizer!!!!</h1>
-        <p>Manage Your Event </p>yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-        <br><br><br>
-    </center>
+<!-------------------------------- Calendar -------------------------------->
 
-    <!-------------------------------------------- Flash Messages -------------------------------------------------->
+<main class="calendar-section">
+    <div class="calendar-container">
+        <!-- Month Navigation -->
+        <div class="calendar-header">
+            <a href="{{ url_for('admin_calendar_view', month=prev_month, year=prev_year) }}" class="nav-btn">‹</a>
+            <h1>{{ current_month_name }} {{ current_year }}</h1>
+            <a href="{{ url_for('admin_calendar_view', month=next_month, year=next_year) }}" class="nav-btn">›</a>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+
+            {% for day in days %}
+                {% if day %}
+                    {% set day_events = events | selectattr("event_date", "equalto", day) | list %}
+                    <a href="{{ url_for('admin_calendar_view', selected_date=day.strftime('%Y-%m-%d'), month=current_month, year=current_year) }}"
+                       class="day 
+                              {% if day == today %}today{% endif %} 
+                              {% if day == selected_date %}selected{% endif %} 
+                              {% if day_events %}has-events{% endif %}">
+                        {{ day.day }}
+                    </a>
+                {% else %}
+                    <div class="day empty"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+<!-- Modal -->
+{% if selected_date %}
+<div class="modal">
+    <div class="modal-content">
+        <h2>Events on {{ selected_date.strftime('%B %d, %Y') }}</h2>
+        {% if selected_events %}
+            <ul>
+                {% for e in selected_events %}
+                    <li>📅 {{ e['event_name'] }} — {{ e['event_date'] }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No events scheduled for this date.</p>
+        {% endif %}
+        <a href="{{ url_for('admin_calendar_view', month=current_month, year=current_year) }}" class="close-btn">Close</a>
+    </div>
+</div>
+{% endif %}
+
+ <!---------------- Flash Messages ------------------->
     <br><br>
     <center>
         {% with messages = get_flashed_messages(with_categories=true) %}

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import pymysql,os
+import pymysql, os, calendar, datetime
 
 app = Flask(__name__)
 app.secret_key = "12345"
@@ -115,23 +115,48 @@ def login():
     return render_template("login.html")
 
 
-#------------------------------------- Admin Home Page -----------------------------------#
+#------------------------------------- Admin Dashboard -----------------------------------#
 
 
 @app.route('/admin_dashboard')
 def admin_dashboard():
     if "username" in session:
-        if "username" in session:
-            conn = get_db_connection()
-            with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
-                user = cursor.fetchone()  
-                cursor.execute("SELECT * FROM events")
-                events = cursor.fetchall()
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+            
+            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+            user = cursor.fetchone()
+
+            
+            cursor.execute("SELECT * FROM events")
+            events = cursor.fetchall()
+
+           
+            cursor.execute("SELECT COUNT(*) AS total_events FROM events")
+            total_events = cursor.fetchone()["total_events"]
+
+           
+            cursor.execute("""
+                SELECT event_name, event_type, event_date
+                FROM events
+                ORDER BY event_date DESC
+                LIMIT 5
+            """)
+            recent_activities = cursor.fetchall()
+
         conn.close()
-        return render_template("admin_home.html", user=user, events = events)  
+
+        
+        return render_template(
+            "admin_dash.html",
+            user=user,
+            events=events,
+            total_events=total_events,
+            recent_activities=recent_activities
+        )
     else:
         return redirect(url_for("login"))
+
     
 #------------------------------------- Admin Information -----------------------------------#
 
@@ -451,7 +476,7 @@ def organizer_manage_events():
     cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
     user = cursor.fetchone()
 
-    # Get all events (you can also filter only events created by them if you add a 'created_by' column)
+    
     cursor.execute("SELECT * FROM events ORDER BY event_date ASC")
     events = cursor.fetchall()
 
@@ -473,7 +498,7 @@ def org_delete_event(event_id):
     conn.close()
 
     flash("Event deleted successfully!", "success")
-    return redirect(url_for("org_manage_events"))
+    return redirect(url_for("organizer_manage_events"))
 
 #-------------------------------------- Organizer Update Event ----------------------------------------#
 
@@ -485,7 +510,7 @@ def organizer_update_events(event_id):
     conn = get_db_connection()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-    # Get user and event details
+    
     cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
     user = cursor.fetchone()
 
@@ -531,7 +556,8 @@ def organizer_update_events(event_id):
         return redirect(url_for("organizer_manage_events"))
 
     conn.close()
-    return render_template("org_update_event.html", user=user, event=event)
+    return render_template("org_update_event.html", user = user, event = event)
+
 
 #--------------------------------------- User Home Page --------------------------------------------#
 
@@ -577,6 +603,7 @@ def u_event():
     conn.close()
     return render_template("user_event.html", user=user, events=events)
 
+
 #--------------------------------------- User View Event Details ---------------------------------------------#
 
 @app.route('/view_details/<int:event_id>')
@@ -599,8 +626,42 @@ def view_details(event_id):
             return "Event not found", 404
     else:
         return redirect(url_for("login"))
+    
+ #--------------------------------------- User Calendar ---------------------------------------------#
 
 
+
+
+#----------------------------------------- User Register to events -----------------------------------------#
+
+@app.route('/user_register' , methods = ["GET", "POST"])
+def user_register():
+     if "username" in session:
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+           
+            cursor.execute("SELECT * FROM users WHERE username=%s", (session["username"],))
+            user = cursor.fetchone()
+            
+            if request.method == "POST":
+                conn=get_db_connection()
+                names = request.form.get('s_names')
+                number = request.form.get('s_number')
+                email = request.form.get('s_email')
+                course = request.form.get('s_course')
+                year = request.form.get('s_year')
+                time = request.form.get('s_time')
+                comment= request.form.get('comments')
+                
+                with conn.cursor() as cursor:
+                    cursor.execute("INSERT INTO user_registers (stud_name, stud_no, stud_email, stud_course, stud_year_level, stud_app_time, stud_comments)"
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (names, number, email, course, year, time, comment))
+                    conn.commit()
+                    flash("register successful!", "success")
+                conn.close()
+             
+        return render_template("user_registers.html", user=user)
 
 #--------------------------------------- User Information --------------------------------------------#
 
@@ -617,7 +678,6 @@ def user_info():
         return redirect(url_for("login"))
     
     
-
 #--------------------------------------- User update password --------------------------------------------#
 
 @app.route('/update_password', methods=['GET', 'POST'])
@@ -704,7 +764,83 @@ def upload_profile():
     return redirect(url_for("user_info"))
 
 
+#--------------------------------------- Calendar View --------------------------------------------#
+@app.route("/calendar")
+def calendar_view():
+    # ✅ Check login
+    if "username" not in session:
+        return redirect(url_for("login"))
+    username = session["username"]
     
+    # ✅ Get today
+    today = datetime.date.today()
+
+    # ✅ Get query params for month/year
+    month = request.args.get('month', today.month, type=int)
+    year = request.args.get('year', today.year, type=int)
+
+    # ✅ Compute previous and next month/year
+    prev_month = month - 1 if month > 1 else 12
+    prev_year = year if month > 1 else year - 1
+    next_month = month + 1 if month < 12 else 1
+    next_year = year if month < 12 else year + 1
+
+    # ✅ Selected date for modal
+    selected_date_str = request.args.get("selected_date")
+    if selected_date_str:
+        selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
+    else:
+        selected_date = None
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # ✅ Get user info
+    cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+    user = cursor.fetchone()
+
+    # ✅ Get all events for the month
+    first_day = datetime.date(year, month, 1)
+    last_day = datetime.date(year, month, calendar.monthrange(year, month)[1])
+    cursor.execute("SELECT * FROM events WHERE event_date BETWEEN %s AND %s", (first_day, last_day))
+    events = cursor.fetchall()
+
+    # ✅ Get events on selected date
+    selected_events = []
+    if selected_date:
+        cursor.execute("SELECT * FROM events WHERE event_date=%s", (selected_date,))
+        selected_events = cursor.fetchall()
+
+    conn.close()
+
+    # ✅ Calendar setup
+    current_month_name = calendar.month_name[month]
+    first_weekday, num_days = calendar.monthrange(year, month)
+    days = []
+
+    for _ in range((first_weekday + 1) % 7):
+        days.append(None)
+    for d in range(1, num_days + 1):
+        days.append(datetime.date(year, month, d))
+
+    return render_template(
+        "user_calendar.html",
+        user=user,
+        today=today,
+        selected_date=selected_date,
+        selected_events=selected_events,
+        current_year=year,
+        current_month=month,
+        current_month_name=current_month_name,
+        days=days,
+        events=events,
+        prev_month=prev_month,
+        prev_year=prev_year,
+        next_month=next_month,
+        next_year=next_year
+    )
+
+
 #----------------------------------------- Logout -----------------------------------------#
 
 @app.route('/logout')

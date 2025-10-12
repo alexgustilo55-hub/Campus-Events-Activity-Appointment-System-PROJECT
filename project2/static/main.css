@@ -10,6 +10,7 @@ body{
   color: #1a1a1a;
   margin: 0;
   padding-top: 60px;  
+  padding-top: 80px; /* mas mataas para sa fixed header */
     
 }
 
@@ -18,14 +19,14 @@ body{
 /*------------------------------- Header & Navbar -------------------------------*/
 
 header {
-    position: fixed;        
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: white; 
+    background-color: white;
     z-index: 1000;
     box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    border-bottom: 100px;
+    height: 60px; /* fixed height */
 }
 
 nav {
@@ -128,7 +129,7 @@ nav {
     justify-content: center;
     background-color: #f0f0f0;
     color: #555;
-    font-size: 36px; /* icon size */
+    font-size: 36px; 
 }
 
 .profile-card a, .profile-card button {
@@ -284,7 +285,7 @@ nav {
     width: 350px;
     text-align: center;
     animation: slideFromTop 0.8s ease-out;
-    height: 400px;
+    height: 480px;
     margin-top: 60px;
 }
 
@@ -328,7 +329,7 @@ nav {
 .input-container {
     position: relative;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .input-container i {
     position: absolute;
@@ -375,7 +376,7 @@ nav {
     letter-spacing: 0.3px;
 }
 
-/* Dropdown style same as role selector but pink-accented */
+
 .select-organizer-type select {
     padding: 12px;
     border: 2px solid #ccc;
@@ -511,7 +512,7 @@ nav {
 
 /*------------------------------------------- User Information --------------------------------------*/
 
-/*----------- Upload Profile ----------*/
+/*------ Upload Profile ------*/
 #profileForm {
     display: flex;
     justify-content: center;
@@ -711,7 +712,7 @@ nav {
     transform: scale(1.05);
 }
 
-/* ===================================== Event Details Page =================================== */
+/* ============================================== Event Details Page ======================================== */
 
 
 .event-details-container {
@@ -884,7 +885,129 @@ nav {
 }
 
 
+/* ===================================================== USER REGISTRATION SECTION ============================================= */
+.user-registration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    padding: 30px 15px;
+}
 
+.user-registration-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px 50px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    max-width: 750px;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-registration-container:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.user-registration-form h1 {
+    font-size: 1.5rem;
+    color: #1f1f1f;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.user-registration-form p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+/* Labels and Inputs */
+.user-registration-form label {
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.user-registration-form input[type="text"],
+.user-registration-form input[type="email"],
+.user-registration-form input[type="time"],
+.user-registration-form select,
+.user-registration-form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.user-registration-form input:focus,
+.user-registration-form select:focus,
+.user-registration-form textarea:focus {
+    border-color: #3b82f6; /* blue accent */
+    box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+    background-color: #fff;
+}
+
+/* Buttons */
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-cancel {
+    background-color: #f3f4f6;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-submit {
+    background-color: #2563eb; /* blue accent like your create event button */
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #1e40af;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .user-registration-container {
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-cancel, .btn-submit {
+        width: 100%;
+    }
+}
+
+    
 
 
 /*------------------------------------------- Flash Message Effects---------------------------------------*/
@@ -928,6 +1051,196 @@ nav {
     70% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-20px); }
 }
+
+
+/* ====================================== Calendar View ============================= */
+/* ======================== Calendar CSS ======================== */
+
+/* Calendar Container */
+.calendar-container {
+    max-width: 900px;
+    margin: 60px auto;
+    text-align: center;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendar Header (Month Navigation) */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.nav-btn {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Day Headers (Sun, Mon, ...) */
+.day-header {
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Calendar Days */
+.day, .day.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.day {
+    background: #f4f4f4;
+    color: #333;
+}
+
+.day:hover {
+    background: #d0e6ff;
+}
+
+.day.today {
+    background: #007bff;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+}
+
+.day.selected {
+    background: #4CAF50;
+    color: white;
+}
+
+.day.has-events {
+    border: 2px solid #007bff;
+}
+
+.day.empty {
+    background: transparent;
+}
+
+/* ======================== Modal CSS ======================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* mas mataas sa navbar */
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 20px;            /* mas malaki ang curve */
+    border: 3px solid #007bff;      /* mas visible na border */
+    padding: 30px;
+    max-width: 450px;                /* mas malaki */
+    text-align: center;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    animation: modalSlideUp 0.3s ease forwards;
+}
+
+.close-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: #0056b3;
+}
+
+/* ======================== Animations ======================== */
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+
+/* =======================================  FOOTER ============================= */
+.site-footer {
+    background-color: #f5f5f5; 
+    color: #333;
+    text-align: center;
+    padding: 25px 10px;
+    font-family: 'Poppins', sans-serif;
+    border-top: 1px solid #ddd;
+    margin-top: 50px;
+}
+
+.site-footer .footer-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.site-footer h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.site-footer p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
+
+.site-footer strong {
+    color: #007bff; /* subtle blue accent to match your buttons */
+}
+
+.site-footer .rights {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* Optional hover accent */
+.site-footer:hover {
+    background-color: #eeeeee;
+    transition: 0.3s ease-in-out;
+}
+
 
 
 

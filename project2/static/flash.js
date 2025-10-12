@@ -5,7 +5,7 @@ function toggleProfile() {
             card.style.display = (card.style.display === "block") ? "none" : "block";
         }
 
-/*----------------------------------  -------------------------*/
+/*----------------------------- Organizer Type ----------------------------*/
 document.addEventListener('DOMContentLoaded', function() {
     const roleSelect = document.getElementById('role');
     const organizerTypeDiv = document.getElementById('organizerType');
@@ -18,9 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-
-
+/*----------------------------- Calendar ----------------------------*/
 
 
 
